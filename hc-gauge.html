@@ -1,0 +1,36 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-gauge.html">
+
+
+<!--
+
+TODO: Fill in docs
+
+@package highcharts-elements
+@element hc-gauge
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-gauge">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-gauge'
+
+        , _gaugeType: 'donut'
+        
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BaseGauge
+        ]
+    });
+
+})();
+</script>

@@ -1,0 +1,48 @@
+{
+  "name": "highcharts-elements",
+  "version": "0.0.1",
+  "description": "A library of polymer elements for rendering highcharts",
+  "homepage": "https://github.com/<USERNAME>/highcharts-elements/",
+  "keywords": [
+    "pie",
+    "bar",
+    "column",
+    "area",
+    "line",
+    "bubble",
+    "scatter",
+    "areaspline",
+    "pyramid",
+    "funnel",
+    "gauge",
+    "donut",
+    "charts",
+    "highchart",
+    "highcharts",
+    "polymer",
+    "web-components"
+  ],
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    "**/.*",
+    "bower_components",
+    "test"
+  ],
+  "main": "highcharts-elements.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#v1.0.2",
+    "highcharts": "highcharts-release#v4.1.5",
+    "numeral": "adamwdraper/Numeral-js#1.5.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page",
+    "web-component-tester": "*"
+  },
+  "resolutions": {
+    "polymer": "v1.0.2",
+    "webcomponentsjs": "^0.7.2",
+    "mocha": "^2.2.4"
+  }
+}

@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>highcharts-elements demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="../highcharts-elements.html">
+  <!-- <link rel="import" href="../hc-theme-dark-green.html"> -->
+
+  <style>
+      
+      body {
+          font-family: Helvetica, Arial, FreeSans, Verdana, Tahoma, 'Lucida Sans', 'Lucida Sans Unicode', 'Luxi Sans', sans-serif;
+      }
+      
+      .widget-con {
+          float: left;
+          width: 400px;
+          margin-right: 50px;
+          margin-bottom: 50px;
+      }
+      
+      h2 {
+          margin-bottom: 2em;
+          clear: both;
+      }
+  </style>
+</head>
+<body unresolved>
+    
+    <h2>Bars</h2>
+    
+    <div class="widget-con">
+        <h2>hc-bar</h2>
+        <hc-bar
+            width="400"
+            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+        </hc-bar>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-area</h2>
+        <hc-area
+            width="400"
+            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+        </hc-area>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-column</h2>
+        <hc-column
+            width="400"
+            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+        </hc-column>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-bubble</h2>
+        <hc-bubble
+            width="400"
+            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+        </hc-bubble>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-scatter</h2>
+        <hc-scatter
+            width="400"
+            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+        </hc-scatter>
+    </div>
+    
+    <h2>Line Charts</h2>
+    
+    <div class="widget-con">
+        <h2>hc-line</h2>
+        <hc-line
+            width="400"
+            series='[{"name":"Tokyo","data":[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6]},{"name":"New York","data":[-0.2,0.8,5.7,11.3,17,22,24.8,24.1,20.1,14.1,8.6,2.5]},{"name":"Berlin","data":[-0.9,0.6,3.5,8.4,13.5,17,18.6,17.9,14.3,9,3.9,1]},{"name":"London","data":[3.9,4.2,5.7,8.5,11.9,15.2,17,16.6,14.2,10.3,6.6,4.8]}]'>
+        </hc-line>
+    </div>
+    
+    
+    <h2>Pie Charts</h2>
+    
+    <div class="widget-con">
+        <h2>hc-pie - defaults</h2>
+        <hc-pie
+            title="Default"
+            width="400"
+            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+        </hc-pie>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-pie</h2>
+        <hc-pie
+            title="Labels Hidden"
+            width="400"
+            hide-labels
+            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+        </hc-pie>
+    </div>
+    
+    
+    <h2>Donut Charts</h2>
+    
+    <div class="widget-con">
+        <h2>hc-donut</h2>
+        <hc-donut
+            title="Default"
+            width="400"
+            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+        </hc-donut>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-donut-semi</h2>
+        <hc-donut-semi
+            title="Default"
+            width="400"
+            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+        </hc-donut-semi>
+    </div>
+    
+    
+    <h2>Gauge Charts</h2>
+    
+    <div class="widget-con">
+        <h2>hc-gauge-semi</h2>
+        <hc-gauge-semi
+            title="A Speedy Gauge"
+            width="400"
+            sub-text="MPH"
+            max="100"
+            series='[{"name":"Speed","data":[80]}]'>
+        </hc-gauge-semi>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-gauge</h2>
+        <hc-gauge
+            title="Unicorn Status"
+            width="400"
+            sub-text="MPH"
+            show-ticks
+            max="1000000000"
+            format="0.0a"
+            series='[{"name":"Aww Shit!","data":[500000000]}]'>
+        </hc-gauge>
+    </div>
+ 
+    <h2>Funnel Charts</h2>
+    
+    <div class="widget-con">
+        <h2>hc-funnel</h2>
+        <hc-funnel
+            title="Default"
+            width="400"
+            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+        </hc-funnel>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-funnel</h2>
+        <hc-funnel
+            title="Labels Hidden"
+            width="400"
+            hide-labels
+            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+        </hc-funnel>
+    </div>
+    
+    
+    <h2>Pyramid Charts</h2>
+    
+    <div class="widget-con">
+        <h2>hc-pyramid</h2>
+        <hc-pyramid
+            title="Default"
+            width="400"
+            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+        </hc-pyramid>
+    </div>
+    
+    <div class="widget-con">
+        <h2>hc-pyramid</h2>
+        <hc-pyramid
+            title="Labels Hidden"
+            width="400"
+            hide-labels
+            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+        </hc-pyramid>
+    </div>
+    
+</body>
+</html>

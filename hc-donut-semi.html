@@ -1,0 +1,36 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-pie.html">
+
+
+<!--
+
+TODO: Fill in docs
+
+@package highcharts-elements
+@element hc-donut-semi
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-donut-semi">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-donut-semi'
+        
+        , _pieType: 'donut-semi'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BasePie
+        ]
+    });
+
+})();
+</script>

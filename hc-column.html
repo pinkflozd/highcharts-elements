@@ -1,0 +1,40 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-chart.html">
+
+<!--
+
+TODO: Fill in docs
+
+@package highcharts-elements
+@element hc-column
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-column">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-column'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BaseChart
+        ]
+
+        , properties: {
+            type: {
+              type: String,
+              value: 'column'
+            }
+        }
+    });
+
+})();
+</script>

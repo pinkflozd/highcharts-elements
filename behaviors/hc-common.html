@@ -1,0 +1,155 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../imports.html">
+<link rel="import" href="../hc-ns.html">
+
+<script>
+    
+    HighChartsElement.SUPPORTED_CHART_TYPES = {
+        LINE:           'line'
+        , SPLINE:       'spline'
+        , BAR:          'bar'
+        , COLUMN:       'column'
+        , AREA:         'area'
+        , AREASPLINE:   'areaspline'
+        , SCATTER:      'scatter'
+        , BUBBLE:       'bubble'
+    };
+        
+    HighChartsElement.CommonImpl = {
+        
+        properties: {
+            
+            width: {
+              type: Number,
+              value: null
+            }
+            
+            , height: {
+              type: Number,
+              value: null
+            }
+        
+            , options: {
+              type: Object
+            }
+        
+            , type: {
+              type: String,
+              value: 'bar'
+            }
+            
+            , title: {
+              type: String,
+              value: ''
+            }
+            
+            , subtitle: {
+              type: String,
+              value: ''
+            }
+            
+            , credits: {
+              type: Boolean,
+              value: false
+            }
+            
+            , animation: {
+              type: Boolean,
+              value: true
+            }
+            
+            , legend: {
+              type: Boolean,
+              value: true
+            }
+            
+            , hideLabels: {
+              type: Boolean,
+              value: false
+            }
+            
+            , reflow: {
+              type: Boolean,
+              value: false
+            }
+            
+            , exporting: {
+              type: Boolean,
+              value: false
+            }
+            
+            , colors: {
+                type: Array,
+                value: null
+            }
+            
+            , series: {
+                type: Array,
+                value: null
+            }
+            
+        }
+        
+        , _chart: null
+        
+        , getChart: function() {
+            return this._chart;
+        }
+        
+        , _getChartElement: function() {
+            return this.$.chartContainer;
+        }
+        
+        , _commonChartOptions: function(options) { var self = this;
+            // Handle common properties (TODO: Maybe deep merging)
+            options.chart.renderTo     = self._getChartElement()
+            options.chart.width        = (self.width?self.width:null)
+            options.chart.height       = (self.height?self.height:null)
+            options.chart.animation    = self.animation;
+            options.chart.reflow       = self.reflow;
+            
+            options.exporting          = self.exporting;
+            options.credits            = self.credits;
+            
+            if(!options.title) { options.title = {}; }
+            options.title.text = self.title;
+            
+            if(!options.subtitle) { options.subtitle = {}; }
+            options.subtitle.text = self.subtitle;
+            
+            if(!options.legend) { options.legend = {}; }
+            options.legend.enabled = self.legend;
+            
+            return options;
+        }
+        
+        , ready: function() { var self = this;
+            self.async( function(){ var self = this;
+                self.render();
+            }.bind(self), 1);    
+        }
+        
+        , render: function() { var self = this;
+            if(!self.series){
+                return;
+            }
+            if(!self._chart) {
+                var chartOptions = self._commonChartOptions( self._createChartOptions());
+                if(typeof self._setChartStackingOptions==='function'){
+                    self._setChartStackingOptions(chartOptions);
+                }
+                self._chart = new Highcharts.Chart(chartOptions);
+            } else {
+                try {
+                    self._chart.series = self.series;
+                    // self._chart.series[0].setData(self.series);
+                }catch(ex){
+                    console.log("Exception thrown updating chart data %o", ex);
+                }
+            }
+        }
+       
+    };
+    
+    HighChartsElement.Common = [HighChartsElement.CommonImpl];
+</script>

@@ -1,0 +1,9 @@
+:host {
+    display: inline-block;
+    position: relative;
+    
+}
+
+:host #chartContainer {
+    margin: 0 auto;
+}

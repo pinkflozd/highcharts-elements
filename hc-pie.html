@@ -1,0 +1,34 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-pie.html">
+
+
+<!--
+
+TODO: Fill in docs
+
+@package highcharts-elements
+@element hc-pie
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-pie">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-pie'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BasePie
+        ]
+    });
+
+})();
+</script>
