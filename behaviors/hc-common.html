@@ -14,7 +14,13 @@
         , SCATTER:      'scatter'
         , BUBBLE:       'bubble'
     };
-        
+     
+   /**
+    * `HighChartsElement.Common` is a behavior that can be used in Polymer elements to
+    * coordinate the flow of resize events between "resizers" (elements that control the
+    *
+    * @polymerBehavior HighChartsElement.Common
+    **/
     HighChartsElement.CommonImpl = {
         
         properties: {
@@ -30,7 +36,8 @@
             }
         
             , options: {
-              type: Object
+              type: Object,
+              value: null
             }
         
             , type: {
@@ -58,9 +65,9 @@
               value: true
             }
             
-            , legend: {
+            , hideLegend: {
               type: Boolean,
-              value: true
+              value: false
             }
             
             , hideLabels: {
@@ -88,6 +95,10 @@
                 value: null
             }
             
+            , debug: {
+              type: Boolean,
+              value: false
+            }
         }
         
         , _chart: null
@@ -109,7 +120,8 @@
             options.chart.reflow       = self.reflow;
             
             options.exporting          = self.exporting;
-            options.credits            = self.credits;
+            if(!options.credits) { options.credits = {}; }
+            options.credits.enabled    = self.credits;
             
             if(!options.title) { options.title = {}; }
             options.title.text = self.title;
@@ -118,7 +130,7 @@
             options.subtitle.text = self.subtitle;
             
             if(!options.legend) { options.legend = {}; }
-            options.legend.enabled = self.legend;
+            options.legend.enabled = !self.hideLegend;
             
             return options;
         }
@@ -138,13 +150,31 @@
                 if(typeof self._setChartStackingOptions==='function'){
                     self._setChartStackingOptions(chartOptions);
                 }
+                
+                if(self.debug) {
+                    console.debug("highcharts-element options object: %o", chartOptions); 
+                }
+                
+                // Merge in override options
+                if(typeof self.options === 'string') {
+                    try {
+                        self.options = JSON.parse(self.options);
+                    } catch(ex){
+                        console.error("Exception thrown parsing options attribute: "+ ex);
+                    }
+                }
+                
+                if(typeof self.options === 'object') {
+                    chartOptions = Highcharts.merge(chartOptions, self.options);
+                }
+                
                 self._chart = new Highcharts.Chart(chartOptions);
             } else {
                 try {
                     self._chart.series = self.series;
                     // self._chart.series[0].setData(self.series);
                 }catch(ex){
-                    console.log("Exception thrown updating chart data %o", ex);
+                    console.error("Exception thrown updating chart data %o", ex);
                 }
             }
         }

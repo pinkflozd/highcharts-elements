@@ -7,192 +7,728 @@
   <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
   <link rel="import" href="../highcharts-elements.html">
   <!-- <link rel="import" href="../hc-theme-dark-green.html"> -->
+  
+  <!-- <link rel="import" href="../../iron-flex-layout/classes/iron-flex-layout.html"> -->
+  <link rel="import" href="../../paper-tabs/paper-tabs.html">
+  <link rel="import" href="../../paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="../../paper-material/paper-material.html">
+  <link rel="import" href="../../iron-pages/iron-pages.html">
+  <link rel="import" href="../../iron-grid/iron-grid.html">
 
-  <style>
-      
-      body {
-          font-family: Helvetica, Arial, FreeSans, Verdana, Tahoma, 'Lucida Sans', 'Lucida Sans Unicode', 'Luxi Sans', sans-serif;
-      }
-      
-      .widget-con {
-          float: left;
-          width: 400px;
-          margin-right: 50px;
-          margin-bottom: 50px;
-      }
-      
-      h2 {
-          margin-bottom: 2em;
-          clear: both;
-      }
-  </style>
+  <script src="../../codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="../../codemirror/lib/codemirror.css">
+  <script src="../../codemirror/mode/javascript/javascript.js"></script>
+  
+  <script src="../../jquery/dist/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../back-to-top/css/style.css" type="text/css" />
+  <link rel="stylesheet" href="demo-styles.css" type="text/css" />
 </head>
 <body unresolved>
-    
-    <h2>Bars</h2>
-    
-    <div class="widget-con">
-        <h2>hc-bar</h2>
-        <hc-bar
-            width="400"
-            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
-        </hc-bar>
+    <div class="container">
+        
+        <!--
+        <div>
+            Theme Switcher Somewhere
+        </div>
+        -->
+        
+<paper-toolbar class="tall">
+    <div class="top heading">
+        <h1>&lt;highcharts-elements&gt;</h1>
+        <h5>Polymer Highcharts Components with Sensible Defaults</h5>
+    </div>
+        
+    <paper-tabs class="bottom" selected="0">
+        <paper-tab>
+            <a href="#section-bar" class="horizontal center-center layout">Bar</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-column" class="horizontal center-center layout">Column</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-area" class="horizontal center-center layout">Area</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-line" class="horizontal center-center layout">Line</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-scatter" class="horizontal center-center layout">Scatter</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-bubble" class="horizontal center-center layout">Bubble</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-pie" class="horizontal center-center layout">Pie</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-donut" class="horizontal center-center layout">Donuts</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-funnel" class="horizontal center-center layout">Funnel</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-pyramid" class="horizontal center-center layout">Pyramid</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-gauge" class="horizontal center-center layout">Gauges</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-overriding" class="horizontal center-center layout">Overriding</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-themes" class="horizontal center-center layout">Themes</a>
+        </paper-tab>
+        <paper-tab>
+            <a href="#section-debugging" class="horizontal center-center layout">Debugging</a>
+        </paper-tab>
+    </paper-tabs>
+</paper-toolbar>
+   
+        
+<div class="section-anchor" id="section-bar"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A basic bar chart with a title</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-bar
+                title="Basic Bar Chart"
+                width="400"
+                height="250"
+                series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+            </hc-bar>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo1">
+<hc-bar
+    title="Basic Bar Chart"
+    width="400"
+    height="250"
+    series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+</hc-bar>
+</textarea>
+<script>
+    var cmDemo1 = CodeMirror.fromTextArea(document.getElementById("demo1"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-column"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A column chart without a title</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-column
+                width="400"
+                height="250"
+                series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+            </hc-column>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo2">
+<hc-column
+    width="400"
+    height="250"
+    series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+</hc-column>
+</textarea>
+<script>
+    var cmDemo2 = CodeMirror.fromTextArea(document.getElementById("demo2"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-area"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">An area chart without a legend</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-area
+                hide-legend
+                width="400"
+                height="250"
+                series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+            </hc-area>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo3">
+<hc-area
+    hide-legend
+    width="400"
+    height="250"
+    series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+</hc-area>
+</textarea>
+<script>
+    var cmDemo3 = CodeMirror.fromTextArea(document.getElementById("demo3"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+  
+
+<div class="section-anchor" id="section-line"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">An basic line chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-line
+                width="400"
+                height="250"
+                series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+            </hc-line>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo4">
+<hc-line
+    width="400"
+    height="250"
+    series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+</hc-line>
+</textarea>
+<script>
+    var cmDemo4 = CodeMirror.fromTextArea(document.getElementById("demo4"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-scatter"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A scatter chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-scatter
+                title="A Scatter Chart"
+                width="400"
+                height="250"
+                series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+            </hc-scatter>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo5">
+<hc-scatter
+    title="A Scatter Chart"
+    width="400"
+    height="250"
+    series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+</hc-scatter>
+</textarea>
+<script>
+    var cmDemo5 = CodeMirror.fromTextArea(document.getElementById("demo5"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-bubble"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A bubble chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-bubble
+                title="A Bubble Chart"
+                width="400"
+                height="250"
+                series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+            </hc-bubble>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo6">
+<hc-bubble
+    title="A Bubble Chart"
+    width="400"
+    height="250"
+    series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
+</hc-bubble>
+</textarea>
+<script>
+    var cmDemo6 = CodeMirror.fromTextArea(document.getElementById("demo6"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-pie"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A default pie chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-pie
+                title="Default Pie Chart"
+                width="400"
+                height="250"
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-pie>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo7">
+<hc-pie
+    title="Default Pie Chart"
+    width="400"
+    height="250"
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-pie>
+</textarea>
+<script>
+    var cmDemo7 = CodeMirror.fromTextArea(document.getElementById("demo7"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A pie chart with labels hidden</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-pie
+                title="Labels Hidden"
+                width="400"
+                height="300"
+                hide-labels
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-pie>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo8">
+<hc-pie
+    title="Labels Hidden"
+    width="400"
+    height="250"
+    hide-labels
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-pie>
+</textarea>
+<script>
+    var cmDemo8 = CodeMirror.fromTextArea(document.getElementById("demo8"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+       
+
+<div class="section-anchor" id="section-donut"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A donut chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-donut
+                title="Default Donut Chart"
+                width="400"
+                height="400"
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-donut>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo9">
+<hc-donut
+    title="Default Donut Chart"
+    width="400"
+    height="250"
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-donut>
+</textarea>
+<script>
+    var cmDemo9 = CodeMirror.fromTextArea(document.getElementById("demo9"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A much more simple donut chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-donut
+                title="Simple Donut"
+                width="400"
+                height="300"
+                hide-labels
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-donut>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo92">
+<hc-donut
+    title="Simple Donut"
+    width="400"
+    height="300"
+    hide-labels
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-donut>
+</textarea>
+<script>
+    var cmDemo92 = CodeMirror.fromTextArea(document.getElementById("demo92"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A semi donut chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-donut-semi
+                width="400"
+                height="250"
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-donut-semi>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo10">
+<hc-donut-semi
+    width="400"
+    height="250"
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-donut-semi>
+</textarea>
+<script>
+    var cmDemo10 = CodeMirror.fromTextArea(document.getElementById("demo10"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-gauge"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A gauge chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-gauge
+                title="Daily Sales"
+                width="300"
+                height="300"
+                sub-text=""
+                max="500000"
+                format="0 a"
+                series='[{"name":"Aww Shit!","data":[125000]}]'>
+            </hc-gauge>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo11">
+<hc-gauge
+    title="Unicorn Status"
+    width="300"
+    height="300"
+    sub-text="Dollars Raised"
+    show-ticks
+    max="1000000000"
+    format="0 a"
+    series='[{"name":"Aww Shit!","data":[500000000]}]'>
+</hc-gauge>
+</textarea>
+<script>
+    var cmDemo11 = CodeMirror.fromTextArea(document.getElementById("demo11"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A semi gauge chart</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-gauge-semi
+                title="A Speedy Gauge"
+                width="300"
+                height="300"
+                sub-text="MPH"
+                max="100"
+                series='[{"name":"Speed","data":[80]}]'>
+            </hc-gauge-semi>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo12">
+<hc-gauge-semi
+    title="A Speedy Gauge"
+    width="300"
+    height="300"
+    sub-text="MPH"
+    max="100"
+    series='[{"name":"Speed","data":[80]}]'>
+</hc-gauge-semi>
+</textarea>
+<script>
+    var cmDemo12 = CodeMirror.fromTextArea(document.getElementById("demo12"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-funnel"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A funnel chart with labels hidden</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-funnel
+                hide-labels
+                width="400"
+                series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+            </hc-funnel>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo14">
+<hc-funnel
+    hide-labels
+    width="400"
+    series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+</hc-funnel>
+</textarea>
+<script>
+    var cmDemo14 = CodeMirror.fromTextArea(document.getElementById("demo14"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-pyramid"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">A pyramid chart with labels hidden</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-pyramid
+                width="400"
+                series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+            </hc-pyramid>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo13">
+<hc-pyramid
+    width="400"
+    series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+</hc-pyramid>
+</textarea>
+<script>
+    var cmDemo13 = CodeMirror.fromTextArea(document.getElementById("demo13"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-overriding"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">Overriding</h2>
+            
+            <p class="chart-desc">This library only exposes the most common customizations of HighCharts
+            chart types. This is for ease of use and brevity. Nice charts with minimal code.</p>
+            
+            <p class="chart-desc">However, you can always pass in an 'options' attribute for advanced HighCharts features.</p>
+            
+            <p class="chart-desc">The value of this attribute will be merged into the chart's options created by this library just before
+            creating the chart. In combination with the 'debug' attribute, you can see how you are changing the 
+            options that create the HighChart chart.</p>
+            
+            <br />
+        </div>
+        <div class="s12 m6">
+            <hc-donut
+                debug
+                title="Show HighCharts Credits"
+                width="400"
+                height="300"
+                hide-labels
+                options='{"credits": { "enabled": true}}'
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-donut>
+        </div>
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo17">
+<hc-donut
+    debug
+    title="Show HighCharts Credits"
+    width="400"
+    height="300"
+    hide-labels
+    options='{"credits": { "enabled": true}}'
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-donut>
+</textarea>
+<script>
+    var cmDemo17 = CodeMirror.fromTextArea(document.getElementById("demo17"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-themes"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m12">
+            <h2 class="chart-desc">Themes can be used by just importing one in the &lt;head&gt; tag.</h2>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo16">
+<!doctype html>
+<html>
+    <head>
+      <link rel="import" href="../hc-theme-dark-green.html">
+    </head>
+</html>
+</textarea>
+<script>
+    var cmDemo16 = CodeMirror.fromTextArea(document.getElementById("demo16"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
+
+<div class="section-anchor" id="section-debugging"></div>
+<paper-material class="demo-page">
+<iron-grid-container>
+    <iron-grid>
+        <div class="s12 m6">
+            <h2 class="chart-desc">If you include a 'debug' attribute, 
+                the options passed in to create the 
+                HighChart will be written to console.debug</h2>
+        </div>
+        <div class="s12 m6">
+            <hc-donut
+                debug
+                title="Simple Donut"
+                width="400"
+                height="300"
+                hide-labels
+                series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+            </hc-donut>
+        </div>
+
+        <div class="s12">
+            <h4 class="source">Source Code:</h4>
+<textarea id="demo15">
+<hc-donut
+    debug
+    title="Simple Donut"
+    width="400"
+    height="300"
+    hide-labels
+    series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+</hc-donut>
+</textarea>
+<script>
+    var cmDemo15 = CodeMirror.fromTextArea(document.getElementById("demo15"));
+</script>
+        </div>
+</iron-grid-container>
+</paper-material>
+
     </div>
     
-    <div class="widget-con">
-        <h2>hc-area</h2>
-        <hc-area
-            width="400"
-            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
-        </hc-area>
-    </div>
+    <a href="#0" class="cd-top">Top</a>
     
-    <div class="widget-con">
-        <h2>hc-column</h2>
-        <hc-column
-            width="400"
-            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
-        </hc-column>
-    </div>
+    <script>
+        $(function() {
+            $('a[href*=#]:not([href=#])').click(function() {
+              if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                if (target.length) {
+                  $('html,body').animate({
+                    scrollTop: target.offset().top
+                  }, 350);
+                  return false;
+                }
+              }
+            });
+        });
+	</script>
     
-    <div class="widget-con">
-        <h2>hc-bubble</h2>
-        <hc-bubble
-            width="400"
-            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
-        </hc-bubble>
-    </div>
-    
-    <div class="widget-con">
-        <h2>hc-scatter</h2>
-        <hc-scatter
-            width="400"
-            series='[{"name":"Year 1800","data":[107,31,635,203,2]},{"name":"Year 1900","data":[133,156,947,408,6]},{"name":"Year 2008","data":[973,914,4054,732,34]}]'>
-        </hc-scatter>
-    </div>
-    
-    <h2>Line Charts</h2>
-    
-    <div class="widget-con">
-        <h2>hc-line</h2>
-        <hc-line
-            width="400"
-            series='[{"name":"Tokyo","data":[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6]},{"name":"New York","data":[-0.2,0.8,5.7,11.3,17,22,24.8,24.1,20.1,14.1,8.6,2.5]},{"name":"Berlin","data":[-0.9,0.6,3.5,8.4,13.5,17,18.6,17.9,14.3,9,3.9,1]},{"name":"London","data":[3.9,4.2,5.7,8.5,11.9,15.2,17,16.6,14.2,10.3,6.6,4.8]}]'>
-        </hc-line>
-    </div>
-    
-    
-    <h2>Pie Charts</h2>
-    
-    <div class="widget-con">
-        <h2>hc-pie - defaults</h2>
-        <hc-pie
-            title="Default"
-            width="400"
-            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
-        </hc-pie>
-    </div>
-    
-    <div class="widget-con">
-        <h2>hc-pie</h2>
-        <hc-pie
-            title="Labels Hidden"
-            width="400"
-            hide-labels
-            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
-        </hc-pie>
-    </div>
-    
-    
-    <h2>Donut Charts</h2>
-    
-    <div class="widget-con">
-        <h2>hc-donut</h2>
-        <hc-donut
-            title="Default"
-            width="400"
-            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
-        </hc-donut>
-    </div>
-    
-    <div class="widget-con">
-        <h2>hc-donut-semi</h2>
-        <hc-donut-semi
-            title="Default"
-            width="400"
-            series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
-        </hc-donut-semi>
-    </div>
-    
-    
-    <h2>Gauge Charts</h2>
-    
-    <div class="widget-con">
-        <h2>hc-gauge-semi</h2>
-        <hc-gauge-semi
-            title="A Speedy Gauge"
-            width="400"
-            sub-text="MPH"
-            max="100"
-            series='[{"name":"Speed","data":[80]}]'>
-        </hc-gauge-semi>
-    </div>
-    
-    <div class="widget-con">
-        <h2>hc-gauge</h2>
-        <hc-gauge
-            title="Unicorn Status"
-            width="400"
-            sub-text="MPH"
-            show-ticks
-            max="1000000000"
-            format="0.0a"
-            series='[{"name":"Aww Shit!","data":[500000000]}]'>
-        </hc-gauge>
-    </div>
- 
-    <h2>Funnel Charts</h2>
-    
-    <div class="widget-con">
-        <h2>hc-funnel</h2>
-        <hc-funnel
-            title="Default"
-            width="400"
-            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
-        </hc-funnel>
-    </div>
-    
-    <div class="widget-con">
-        <h2>hc-funnel</h2>
-        <hc-funnel
-            title="Labels Hidden"
-            width="400"
-            hide-labels
-            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
-        </hc-funnel>
-    </div>
-    
-    
-    <h2>Pyramid Charts</h2>
-    
-    <div class="widget-con">
-        <h2>hc-pyramid</h2>
-        <hc-pyramid
-            title="Default"
-            width="400"
-            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
-        </hc-pyramid>
-    </div>
-    
-    <div class="widget-con">
-        <h2>hc-pyramid</h2>
-        <hc-pyramid
-            title="Labels Hidden"
-            width="400"
-            hide-labels
-            series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
-        </hc-pyramid>
-    </div>
+    <script src="../../back-to-top/js/main.js"></script>
     
 </body>
 </html>

@@ -1,0 +1,226 @@
+/*
+ * PolymerThemes v1.0.0
+ * Homepage: https://polymerthemes.com
+ * Copyright 2015 Polymer Themes
+ * Licensed under BSD
+ * Based on Polymer: http://www.polymer-project.org/
+ * Compatible with Polymer 1.0.0
+ */
+
+@import url("//fonts.googleapis.com/css?family=Oxygen:700|Tinos");
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  min-height: 100%;
+  color: #191919;
+  background-color: #ffffff;
+  font-family: 'Tinos', serif;
+  font-weight: 400;
+}
+
+section {
+  padding: 40px 0px;
+  text-align: center;
+}
+section[hero] {
+  background-color: #f1f1f1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  margin: 0px;
+  padding: 0px;
+}
+
+h1, h3, h5 {
+  font-family: 'Oxygen', sans-serif;
+}
+
+h1 {
+  font-size: 60px;
+  margin: 30px 0px;
+}
+
+h2 {
+  color: #191919;
+  font-size: 40px;
+  margin: 20px 0px;
+}
+
+h3 {
+  font-size: 25px;
+  margin: 15px 0px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+a {
+  color: #191919;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+:root {
+  --dark-primary-color: #191919;
+  --default-primary-color: #191919;
+  --light-primary-color: #c5cae9;
+  --text-primary-color: #ffffff;
+  --accent-color: #ff4081;
+  --primary-background-color: #ffffff;
+  --primary-text-color: #191919;
+  --secondary-text-color: #191919;
+  --disabled-text-color: #313238;
+  --divider-color: #e0e0e0;
+  --paper-toolbar-background: #191919;
+  --paper-toolbar-color: #ffffff;
+}
+
+paper-button.btn-primary, paper-button[primary] {
+  color: #191919;
+}
+paper-button.btn-primary[raised], paper-button[primary][raised] {
+  background-color: #191919;
+  color: #ffffff;
+}
+paper-button.btn-secondary, paper-button[secondary] {
+  color: #1e88e5;
+}
+paper-button.btn-secondary[raised], paper-button[secondary][raised] {
+  background-color: #1e88e5;
+  color: #ffffff;
+}
+paper-button.btn-success, paper-button[success] {
+  color: #8bc34a;
+}
+paper-button.btn-success[raised], paper-button[success][raised] {
+  background-color: #8bc34a;
+  color: #3a5718;
+}
+paper-button.btn-info, paper-button[info] {
+  color: #fadd60;
+}
+paper-button.btn-info[raised], paper-button[info][raised] {
+  background-color: #fadd60;
+  color: #776413;
+}
+paper-button.btn-warning, paper-button[warning] {
+  color: #ffb74d;
+}
+paper-button.btn-warning[raised], paper-button[warning][raised] {
+  background-color: #ffb74d;
+  color: #ffffff;
+}
+paper-button.btn-error, paper-button[error] {
+  color: #ef5350;
+}
+paper-button.btn-error[raised], paper-button[error][raised] {
+  background-color: #ef5350;
+  color: #ffffff;
+}
+paper-button.btn-link, paper-button[link] {
+  text-decoration: underline;
+}
+paper-button[raised] {
+  color: #191919;
+}
+paper-button[disabled] {
+  color: #313238 !important;
+  background: #afb1b9 !important;
+}
+
+paper-checkbox {
+  --paper-checkbox-checked-color: #191919;
+  --paper-checkbox-checked-ink-color: #191919;
+  --paper-checkbox-unchecked-color: #191919;
+  --paper-checkbox-unchecked-ink-color: #191919;
+  --paper-checkbox-label-color: #191919;
+}
+
+paper-dialog h2 {
+  padding: 0 24px;
+}
+
+paper-fab {
+  --paper-fab-background: #191919;
+}
+
+paper-icon-button {
+  --paper-icon-button-disabled-text: #afb1b9;
+}
+
+paper-input {
+  --paper-input-container-color: #7f7f7f;
+  --paper-input-container-focus-color: #191919;
+  --paper-input-container-invalid-color: #ef5350;
+  --paper-input-container-input-color: #7f7f7f;
+}
+
+paper-menu {
+  --paper-menu-background-color: #f1f1f1;
+  --paper-menu-color: #191919;
+  --paper-menu-disabled-color: #afb1b9;
+}
+
+section.hero paper-menu, section[hero] paper-menu {
+  --paper-menu-background-color: #ffffff;
+}
+
+paper-progress {
+  --paper-progress-active-color: #191919;
+  --paper-progress-secondary-color: #1e88e5;
+}
+
+paper-radio-button {
+  --paper-radio-button-checked-color: #191919;
+  --paper-radio-button-checked-ink-color: #b2b2b2;
+  --paper-radio-button-unchecked-color: #191919;
+  --paper-radio-button-label-color: #191919;
+}
+
+paper-slider {
+  --paper-slider-knob-color: #191919;
+  --paper-slider-active-color: #191919;
+  --paper-slider-pin-color: #191919;
+}
+
+paper-spinner {
+  --paper-spinner-layer-1-color: #191919;
+  --paper-spinner-layer-2-color: #191919;
+  --paper-spinner-layer-3-color: #191919;
+  --paper-spinner-layer-4-color: #191919;
+}
+
+paper-tabs {
+  --paper-tabs-selection-bar-color: #80cbc4;
+  --paper-tab-ink: #80cbc4;
+  background-color: #191919;
+  color: #ffffff;
+}
+
+paper-tab {
+  --paper-tab-ink: #80cbc4;
+}
+
+paper-toggle-button {
+  --paper-toggle-button-unchecked-bar-color: #191919;
+  --paper-toggle-button-unchecked-button-color: white;
+  --paper-toggle-button-unchecked-ink-color: #191919;
+  --paper-toggle-button-checked-bar-color: #191919;
+  --paper-toggle-button-checked-button-color: #191919;
+  --paper-toggle-button-checked-ink-color: #191919;
+}
+
+paper-toolbar {
+  --paper-toolbar-background: #191919;
+  --paper-toolbar-color: #ffffff;
+}

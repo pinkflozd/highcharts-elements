@@ -109,10 +109,12 @@
             if(!options.series[0].dataLabels){
                 options.series[0].dataLabels = {};
             }
-            options.series[0].dataLabels.format = '<div style="text-align:center"><span style="font-size:42px;color:' +
-                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">'+
-                                self._format(self.series[0].data)
-                                +'</span><br/>' + '<span style="font-size:12px;color:silver">'+(self.subText?self.subText:'')+'</span></div>'
+            
+            if(self._gaugeType === 'semi') {
+                options.series[0].dataLabels.format = self._getSemiGaugeDataLabelFormat();
+            } else {
+                options.series[0].dataLabels.format = self._getGaugeDataLabelFormat();
+            }
             
             options.series[0].dataLabels.enabled = !self.hideLabels;
                                
@@ -145,6 +147,20 @@
                 }
             }
             return options;
+        }
+        
+        , _getGaugeDataLabelFormat: function(options) { var self = this;
+            return '<div style="text-align:center"><span style="font-size:42px;color:' +
+                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">'+
+                                self._format(self.series[0].data)
+                                +'</span><br/>' + '<span style="font-size:12px;color:silver">'+(self.subText?self.subText:'')+'</span></div>';
+        }
+        
+        , _getSemiGaugeDataLabelFormat: function(options) { var self = this;
+            return '<div style="text-align:center"><span style="position:relative;top:10px;font-size:42px;color:' +
+                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">'+
+                                self._format(self.series[0].data)
+                                +'</span><br/>' + '<span style="font-size:12px;color:silver">'+(self.subText?self.subText:'')+'</span></div>';
         }
     };
     

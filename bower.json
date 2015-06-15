@@ -32,17 +32,26 @@
   ],
   "main": "highcharts-elements.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#v1.0.2",
+    "polymer": "Polymer/polymer#v1.0.3",
     "highcharts": "highcharts-release#v4.1.5",
     "numeral": "adamwdraper/Numeral-js#1.5.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page",
-    "web-component-tester": "*"
+    "web-component-tester": "*",
+    "paper-tabs": "PolymerElements/paper-tabs",
+    "paper-toolbar": "PolymerElements/paper-toolbar",
+    "paper-material": "PolymerElements/paper-material",
+    "iron-pages": "PolymerElements/iron-pages",
+    "basic-seamless-iframe": "basic-web-components/basic-seamless-iframe",
+    "basic-framed-content": "basic-web-components/basic-framed-content",
+    "iron-grid": "jmcgdz/iron-grid",
+    "codemirror": "codemirror/CodeMirror#5.2.0",
+    "jquery": "~2.1.4",
+    "back-to-top": "CodyHouse/back-to-top"
   },
   "resolutions": {
-    "polymer": "v1.0.2",
-    "webcomponentsjs": "^0.7.2",
-    "mocha": "^2.2.4"
+    "polymer": "v1.0.3",
+    "webcomponentsjs": "^0.7.2"
   }
 }
