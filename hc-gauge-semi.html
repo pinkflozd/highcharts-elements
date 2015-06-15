@@ -1,10 +1,21 @@
 <link rel="import" href="behaviors/hc-common.html">
 <link rel="import" href="behaviors/hc-base-gauge.html">
 
-
 <!--
 
-TODO: Fill in docs
+`hc-gauge-semi` renders a HighCharts semi gauge chart.
+
+Example:
+    <hc-gauge-semi
+        title="A Speedy Gauge"
+        width="300"
+        height="300"
+        sub-text="MPH"
+        max="100"
+        series='[{"name":"Speed","data":[80]}]'>
+    </hc-gauge-semi>
+
+Click 'DEMO' in the top right for a live example.
 
 @package highcharts-elements
 @element hc-gauge-semi

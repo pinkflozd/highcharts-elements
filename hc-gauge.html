@@ -1,10 +1,22 @@
 <link rel="import" href="behaviors/hc-common.html">
 <link rel="import" href="behaviors/hc-base-gauge.html">
 
-
 <!--
 
-TODO: Fill in docs
+`hc-gauge` renders a HighCharts gauge chart.
+
+Example:
+    <hc-gauge
+        title="Daily Sales"
+        width="300"
+        height="300"
+        sub-text=""
+        max="500000"
+        format="0 a"
+        series='[{"name":"Daily Sales","data":[125000]}]'>
+    </hc-gauge>
+
+Click 'DEMO' in the top right for a live example.
 
 @package highcharts-elements
 @element hc-gauge
