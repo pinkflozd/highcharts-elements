@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>highcharts-elements demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="../highcharts-elements.html">
+  <!-- <link rel="import" href="../hc-theme-dark-green.html"> -->
+  
+  <!-- <link rel="import" href="../../iron-flex-layout/classes/iron-flex-layout.html"> -->
+  <link rel="import" href="../../paper-tabs/paper-tabs.html">
+  <link rel="import" href="../../paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="../../paper-material/paper-material.html">
+  <link rel="import" href="../../iron-pages/iron-pages.html">
+  <link rel="import" href="../../iron-grid/iron-grid.html">
+
+  <script src="../../codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="../../codemirror/lib/codemirror.css">
+  <script src="../../codemirror/mode/javascript/javascript.js"></script>
+  
+  <script src="../../jquery/dist/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="theme.css" type="text/css" />
+
+  <link rel="stylesheet" href="demo-styles.css" type="text/css" />
+</head>
+<body unresolved>
+
+    <hc-gauge
+        title="Daily Sales"
+        width="300"
+        height="300"
+        sub-text=""
+        max="500000"
+        format="0 a"
+        series='[{"name":"Daily Sales","data":[125000]}]'>
+    </hc-gauge>
+
+    
+</body>
+</html>

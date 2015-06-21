@@ -27,12 +27,14 @@
             
             width: {
               type: Number,
-              value: null
+              value: null,
+              observer: '_resize'
             }
             
             , height: {
               type: Number,
-              value: null
+              value: null,
+              observer: '_resize'
             }
         
             , options: {
@@ -96,6 +98,16 @@
             }
             
             , debug: {
+              type: Boolean,
+              value: false
+            }
+            
+            , resizeDuration: {
+              type: Number,
+              value: 250
+            }
+            
+            , _isResizing: {
               type: Boolean,
               value: false
             }
@@ -177,6 +189,41 @@
                     console.error("Exception thrown updating chart data %o", ex);
                 }
             }
+        }
+        
+        , _resize: function() { var self = this;
+            self.async( function(){ var self = this;
+                if(self._chart){
+                    try {
+                        self._isResizing=true;
+
+                        // Resize container
+                        var chartCon = self._getChartElement();
+                        chartCon.style.width  = self.width+'px';
+                        chartCon.style.height = self.height+'px';
+                        
+                        // This is how you get the nice dynamic
+                        // resizing effect
+                        self._chart.setSize(
+                            self.width
+                            , self.height
+                            , {duration: self.resizeDuration}
+                        );
+
+                        // Hack because 'sometimes' this element does
+                        // not expand the width of parent, weird 
+                        // because the numbers in setResize() below are correct
+
+                        var hcCon = self.querySelector('.highcharts-container');
+                        hcCon.style.width  = self.width+'px';
+                        hcCon.style.height = self.height+'px';
+                        
+                    } catch(ex) {
+                        console.log('hc-common behavior: Error on resize '+ex);
+                    }
+                    self._isResizing=false;
+                }
+            }.bind(self), 1);  
         }
        
     };
