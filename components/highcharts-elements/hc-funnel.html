@@ -1,0 +1,42 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-funnel.html">
+
+<!--
+
+`hc-funnel` renders a HighCharts funnel chart.
+
+Example:
+    <hc-funnel
+        hide-labels
+        width="400"
+        series='[{"name":"Unique users","data":[["Website visits",15654],["Downloads",4064],["Requested price list",1987],["Invoice sent",976],["Finalized",846]]}]'>
+    </hc-funnel>
+
+Click 'DEMO' in the top right for a live example.
+
+@package highcharts-elements
+@element hc-funnel
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-funnel">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-funnel'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BaseFunnel
+        ]
+    });
+
+})();
+</script>

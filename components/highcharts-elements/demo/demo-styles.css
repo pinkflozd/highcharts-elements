@@ -1,0 +1,146 @@
+  
+.cd-top {
+    background-color: rgba(0, 0, 0, 0.9);
+    right: 10px;
+    bottom: 10px;
+}
+
+.cd-top.cd-fade-out {
+    opacity: .8;
+}
+
+@media only screen and (min-width: 1024px)
+.cd-top {
+    right: 10px;
+    bottom: 10px;
+}
+@media only screen and (min-width: 768px)
+.cd-top {
+    right: 10px;
+    bottom: 10px;
+}
+
+body {
+    background: #fff;
+}
+
+:root { 
+    --paper-toolbar-color: black;
+}
+
+paper-toolbar.paper-toolbar-0 {
+    background-color: #eee;
+    color: #111;
+}
+
+#tabsContent.paper-tabs {
+    padding-right: 24px;
+}
+
+paper-tabs {
+    width: 100%;
+}
+
+/*
+paper-tabs { --paper-tabs-selection-bar-color: black; --paper-tab-ink: black; background-color: #191919; color: #ffffff; }
+paper-tab { --paper-tab-ink: black; }
+*/
+
+paper-toolbar /deep/ .paper-tab-0 #ink.paper-tab {
+    color: #fefefe;
+}
+
+paper-toolbar /deep/ paper-ripple {
+    color: #fefefe;
+}
+
+body {
+    font-family: Helvetica, Arial, FreeSans, Verdana, Tahoma, 'Lucida Sans', 'Lucida Sans Unicode', 'Luxi Sans', sans-serif;
+}
+
+.container {
+    margin: 10px;
+}
+
+.widget-con {
+    float: left;
+    width: 400px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+
+h2 {
+    margin-bottom: 2em;
+    clear: both;
+}
+
+.demo-page {
+    margin: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.demo-title {
+    margin: 2%;
+    padding: 10px;
+}
+
+.demo-page .demo-container {
+    position: relative;
+    margin: 2%;
+}
+
+.demo-page .demo-container .syntax-container {
+    position: relative;
+    float: left;
+    width: 45%;
+}
+
+.demo-page .demo-container .element-container {
+    position: relative;
+    float: right;
+    width: 45%;
+}
+
+.CodeMirror {
+    font-family: monospace;
+    height: 150px;
+    color: black;
+}
+
+h4.source {
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+hc-bar {
+    margin: 0px auto;
+}
+
+.heading {
+    margin-top: 20px;
+}
+
+.heading h1 {
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.heading h5 {
+    margin-left: 10px;
+}
+
+.section-acnchor {
+    display: none;
+}
+
+html /deep/ .tab-content.paper-tab a {
+    color: #fff;
+}
+
+p {
+    color: #191919;
+    font-size: 24px;
+    line-height: 150%;
+}

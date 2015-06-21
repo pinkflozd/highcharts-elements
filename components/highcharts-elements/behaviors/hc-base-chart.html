@@ -1,0 +1,78 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../imports.html">
+<link rel="import" href="../hc-ns.html">
+
+<script>
+     
+    /**
+    * `HighChartsElement.BaseChart` is the base class for line, area, bubble, scatter and 
+    * other types of charts that are mostly interchangable with the same data.
+    *
+    * @polymerBehavior HighChartsElement.BaseChart
+    **/
+    HighChartsElement.BaseChartImpl = {
+        
+        _createChartOptions: function() { var self = this;
+            
+            var options = {
+                chart: {
+                    type: self.type
+                    , zoomType: 'x'
+                }
+                , plotOptions: {
+                    series: {
+                        animation: {
+                            duration: 500
+                    }
+                            },
+                    line: {
+                        animation: {
+                            duration: 500
+                        }
+                    }
+                }
+                , xAxis: {
+
+                }
+                , yAxis: {
+                    labels: {
+                        enabled: true
+                    }
+                    , title: {
+                        text: null
+                    }
+                    , floor: 0
+                    , allowDecimals: false
+                }
+                , series: self.series
+            };
+            return options;
+        }
+        
+        , _setChartStackingOptions: function(options) { var self = this;
+            if(self.stackedChart) {
+                switch(self._chartType) {
+                    case HighChartsElement.SUPPORTED_CHART_TYPES.BAR:
+                        options.plotOptions.series.stacking = 'normal';
+                        break;
+                    case HighChartsElement.SUPPORTED_CHART_TYPES.COLUMN:
+                        options.plotOptions.series.stacking = 'normal';
+                        break;
+                    case HighChartsElement.SUPPORTED_CHART_TYPES.AREA:
+                        options.plotOptions.area = {
+                            stacking: 'normal',
+                            lineColor: '#333',
+                            lineWidth: 1,
+                            marker: {
+                                lineWidth: 1,
+                                lineColor: '#333'
+                            }
+                        };
+                        break;
+                } 
+            }
+        }
+    };
+    
+    HighChartsElement.BaseChart = [HighChartsElement.BaseChartImpl];
+</script>

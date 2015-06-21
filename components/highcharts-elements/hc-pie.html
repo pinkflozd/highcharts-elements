@@ -1,0 +1,43 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-pie.html">
+
+<!--
+
+`hc-pie` renders a HighCharts pie chart.
+
+Example:
+    <hc-pie
+        title="Default Pie Chart"
+        width="400"
+        height="250"
+        series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+    </hc-pie>
+
+Click 'DEMO' in the top right for a live example.
+
+@package highcharts-elements
+@element hc-pie
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-pie">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-pie'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BasePie
+        ]
+    });
+
+})();
+</script>

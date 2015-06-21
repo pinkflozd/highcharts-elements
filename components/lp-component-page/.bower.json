@@ -1,0 +1,54 @@
+{
+  "name": "lp-component-page",
+  "description": "An alternative web component for polymer element documentation",
+  "homepage": "https://github.com/<USERNAME>/lp-component-page/",
+  "keywords": [
+    "linchpin",
+    "linchpinio",
+    "docs",
+    "documentation",
+    "polymer",
+    "web-components"
+  ],
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    "**/.*",
+    "bower_components",
+    "test"
+  ],
+  "main": "lp-component-page.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#v1.0.3",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout",
+    "paper-toolbar": "PolymerElements/paper-toolbar",
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel",
+    "iron-ajax": "PolymerElements/iron-ajax",
+    "hydrolysis": "Polymer/hydrolysis#^1.13.2",
+    "paper-header-panel": "PolymerElements/paper-header-panel",
+    "iron-icons": "PolymerElements/iron-icons",
+    "iron-pages": "PolymerElements/iron-pages",
+    "iron-selector": "PolymerElements/iron-selector",
+    "paper-styles": "PolymerElements/paper-styles",
+    "paper-icon-button": "PolymerElements/paper-icon-button",
+    "paper-tabs": "PolymerElements/paper-tabs"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page",
+    "web-component-tester": "*"
+  },
+  "resolutions": {
+    "polymer": "v1.0.3",
+    "webcomponentsjs": "^0.7.2"
+  },
+  "_release": "9b69af2259",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9b69af225905318f5da306e309797dedaa7be69e"
+  },
+  "_source": "git://github.com/linchpinio/lp-component-page.git",
+  "_target": "*",
+  "_originalSource": "linchpinio/lp-component-page"
+}

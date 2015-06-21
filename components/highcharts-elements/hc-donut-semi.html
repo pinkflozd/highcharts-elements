@@ -1,0 +1,44 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-pie.html">
+
+<!--
+
+`hc-donut-semi` renders a HighCharts semi donut chart.
+
+Example:
+    <hc-donut-semi
+        width="400"
+        height="250"
+        series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8,"sliced":true,"selected":true},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+    </hc-donut-semi>
+
+Click 'DEMO' in the top right for a live example.
+
+@package highcharts-elements
+@element hc-donut-semi
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-donut-semi">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-donut-semi'
+        
+        , _pieType: 'donut-semi'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BasePie
+        ]
+    });
+
+})();
+</script>

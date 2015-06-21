@@ -1,0 +1,663 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../hydrolysis/hydrolysis-analyzer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="./lp-doc-viewer.html">
+
+<dom-module id="lp-component-page">
+    <link rel="import" type="css" href="lp-component-page.css">
+    <template>
+        
+        <hydrolysis-analyzer id="analyzer" src="[[_srcUrl]]" transitive="[[transitive]]" clean analyzer="{{_hydroDesc}}" loading="{{_hydroLoading}}"></hydrolysis-analyzer>
+        <iron-ajax id="ajax" url="[[docSrc]]" handle-as="json" on-response="_handleAjaxResponse"></iron-ajax>
+
+        <paper-drawer-panel drawer-width="272px">
+            
+            <paper-header-panel drawer id="headerPanel">
+                <paper-toolbar>
+                    <h2><span>{{active}}</span></h2><div></div>
+                </paper-toolbar>
+                <div>
+                    <article class="accordion">
+                        <section id="elements" class="open">
+                            <header><a href="#elements-header" on-click="_handleAccordionClick">Elements <paper-icon-button icon="arrow-drop-down"></paper-icon-button></a></header>
+                            <iron-selector id="active" attr-for-selected="name" selected="{{active}}">
+                                <template is="dom-repeat" items="[[docElements]]">
+                                    <div name="[[item.is]]" class="element-item">[[item.is]]</div>
+                                </template>
+                            </iron-selector>
+                        </section>
+                        <section id="behaviors" class="open">
+                            <header><a href="#behaviors-header" on-click="_handleAccordionClick">Behaviors <paper-icon-button icon="arrow-drop-down"></paper-icon-button></a></header>
+                            <iron-selector id="activeBehavior" attr-for-selected="name" selected="{{active}}">
+                                <template is="dom-repeat" items="[[docBehaviors]]">
+                                    <div name="[[item.is]]" class="element-item">[[item.is]]</div>
+                                </template>
+                            </iron-selector>
+                        </section>
+                    </article>
+                </div>
+            </paper-header-panel>
+            
+            <paper-header-panel main>
+                <paper-toolbar>
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <div style="width:100%;">
+                        <h2>
+                            <span id="title">{{title}}</span>
+                            <template is="dom-if" if="{{githubLink}}">
+                                <a id="github" target="_blank" href="{{githubLink}}" style="visibility: visible;">
+                                    <paper-icon-button src="assets/github-logo.png"></paper-icon-button>
+                                </a>
+                            </template>
+                            <template is="dom-if" if="{{!githubLink}}">
+                                <a id="github" target="_blank" href="{{githubLink}}" style="visibility: hidden;">
+                                    <paper-icon-button src="assets/github-logo.png"></paper-icon-button>
+                                </a>
+                            </template>
+                        </h2>
+                    </div>
+                </paper-toolbar>
+                <div>
+                    <div id="docs-content">
+                        <paper-tabs noink selected="[[_viewTypePage(view)]]" selectedindex="0">
+                            <paper-tab name="demo">Demo</paper-tab>
+                            <paper-tab name="docs">Api Docs</paper-tab>
+                        </paper-tabs>
+                        <iron-pages selected="[[_viewTypePage(view)]]" selectedindex="0">
+                            <div id="demo-frame-con" name="demo"></div>
+                            <div id="docs" name="docs">
+                                <div id="catalog-heading" catalog-only>
+                                    <h2><span>[[active]]</span> <span class="version" hidden$="[[!version]]">[[version]]</span></h2>
+                                </div>
+                                <lp-doc-viewer descriptor="{{_activeDescriptor}}" on-lp-doc-viewer-component-selected="_handleComponentSelectedEvent"></lp-doc-viewer>
+                                <div id="nodocs" hidden$="[[_activeDescriptor]]" class="layout fit horizontal center-center">
+                                    No documentation found.
+                                </div>
+                            </div>  
+                        </iron-pages>                        
+                    </div>
+                </div>
+            </paper-header-panel>
+            
+        </paper-drawer-panel>
+
+    </template>
+</dom-module>
+
+<script>
+(function() {
+
+  /**
+   * @param {string} url
+   * @return {string} `url` stripped of a file name, if one is present. This
+   *     considers URLs like "example.com/foo" to already be a base (no `.` is)
+   *     present in the final path part).
+   */
+  function _baseUrl(url) {
+    return url.match(/^(.*?)\/?([^\/]+\.[^\/]+)?$/)[1] + '/';
+  }
+
+  Polymer({
+  
+    is: 'lp-component-page',
+    
+    enableCustomStyleProperties: true,
+    
+    properties: {
+    
+      /**
+       * The URL to an import that declares (or transitively imports) the
+       * elements that you wish to see documented.
+       *
+       * If the URL is relative, it will be resolved relative to the master
+       * document.
+       *
+       * If a `src` URL is not specified, it will resolve the name of the
+       * directory containing this element, followed by `dirname.html`. For
+       * example:
+       *
+       * `awesome-sauce/index.html`:
+       *
+       *     <lp-doc-viewer></lp-doc-viewer>
+       *
+       * Would implicitly have `src="awesome-sauce.html"`.
+       */
+      src: {
+        type:     String,
+        observer: '_srcChanged',
+      },
+      
+      title: {
+        type:     String,
+        value: 'Demos and Documentation'
+      },
+
+      /**
+       * The URL to a precompiled JSON descriptor. If you have precompiled
+       * and stored a documentation set using Hydrolysis, you can load the
+       * analyzer directly via AJAX by specifying this attribute.
+       *
+       * If a `doc-src` is not specified, it is ignored and the default
+       * rules according to the `src` attribute are used.
+       */
+      docSrc: {
+        type: String,
+        observer: '_srcChanged',
+      },
+
+      /**
+       * The relative root for determining paths to demos and default source
+       * detection.
+       */
+      base: {
+        type: String,
+        value: function() {
+          return this.ownerDocument.baseURI;
+        }
+      },
+
+      /**
+       * The element or behavior that will be displayed on the page. Defaults
+       * to the element matching the name of the source file.
+       */
+      active: {
+        type: String,
+        observer: '_activeChanged',
+        notify: true
+      },
+
+      /**
+       * The current view. Can be `docs` or `demo`.
+       */
+      view: {
+        type: String,
+        value: 'demo',
+        notify: true
+      },
+
+      /**
+       * Whether _all_ dependencies should be loaded and documented.
+       *
+       * Turning this on will probably slow down the load process dramatically.
+       */
+      transitive: {
+        type: Boolean,
+        value: false
+      },
+
+      /** The Hydrolysis element descriptors that have been loaded. */
+      docElements: {
+        type:     Array,
+        observer: '_descriptorsChanged',
+        notify: true,
+        readOnly: true
+      },
+
+      /** The Hydrolysis behavior descriptors that have been loaded. */
+      docBehaviors: {
+        type:     Array,
+        observer: '_descriptorsChanged',
+        notify: true,
+        readOnly: true
+      },
+
+      /**
+       * Demos for the currently selected element.
+       */
+      docDemos: {
+        type: Array,
+        notify: true,
+        readOnly: true
+      },
+      
+      /**
+       * Optional link to GitHub
+       */
+      githubLink: {
+        type: String,
+        value: null
+      },
+
+      /**
+       * The currently displayed element.
+       *
+       * @type {!hydrolysis.ElementDescriptor}
+       */
+      _activeDescriptor: Object,
+
+      /**
+       * Toggle flag to be used when this element is being displayed in the
+       * Polymer Elements catalog.
+       */
+      _catalog: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+      /**
+       * An optional version string.
+       */
+      version: String,
+
+      /**
+       * The hydrolysis analyzer.
+       *
+       * @type {!hydrolysis.Analyzer}
+       */
+      _analyzer: {
+        type: Object,
+        observer: '_analyzerChanged',
+      },
+      _hydroDesc: {
+        type: Object,
+        observer: '_detectAnalyzer'
+      },
+      _ajaxDesc: {
+        type: Object,
+        observer: '_detectAnalyzer'
+      },
+
+      /** Whether the analyzer is loading source. */
+      _loading: {
+        type:     Boolean,
+        observer: '_loadingChanged',
+      },
+      _hydroLoading: {
+        type: Boolean,
+        observer: '_detectLoading'
+      },
+      _ajaxLoading: {
+        type: Boolean,
+        observer: '_detectLoading'
+      },
+
+      /** The complete URL to this component's demo. */
+      _demoUrl: {
+        type: String,
+        value: '',
+      },
+
+      /** The complete URL to this component's source. */
+      _srcUrl: String,
+      
+      _frameSrc: {
+        type: String,
+        value: undefined,
+        computed: '_computeFrameSrc(src,view)'
+      },
+      
+      _haveComputedFrameSrc: {
+        type: Boolean,
+        value: false
+      }
+    },
+    
+    listeners: {
+      'iron-select': '_onTabChanged'
+    },
+    
+    _handleAccordionClick: function(e) {
+        e.preventDefault();
+        var target = e.target;
+        if(target.localName !== 'a') {
+            target = this._getClosest(target, 'a');
+        }
+        if(!target) {
+            return;
+        }
+        var accordion = this._getClosest(target, 'article');
+        var targetSection = this._getClosest(target, 'section');
+        var panes = this.$['active'].querySelectorAll('section');
+        
+        // Close others
+        for (var i = 0; i < panes.length; ++i) {
+            if(targetSection!=panes[i]) {
+                this.toggleClass('open', false, panes[i]);
+            }   
+        }
+        // Toggle clicked
+        var clickedPane = this.$[target.hash.substring(1)];
+        if(clickedPane) {
+            this.toggleClass('open', !this._hasClass(clickedPane,'open'), clickedPane);
+        } else {
+            this.toggleClass('open', !this._hasClass(targetSection,'open'), targetSection);
+        }
+            
+        return false;
+    },
+    
+    // TODO: This and toggle classes stuff in reusable behavior
+    _getClosest: function(el, tag) {
+        // this is necessary since nodeName is always in upper case
+        tag = tag.toUpperCase();
+        do {
+          if (el.nodeName === tag) {
+            return el;
+          }
+        } while (el = el.parentNode);
+        return null;
+    },
+    
+    _hasClass: function(el, clazz) {
+        return el.classList.contains(clazz);
+    },
+    
+    _showGitHub: function(githubLink) {
+        return (githubLink?'visible':'hidden');
+    },
+    
+    _onTabChanged: function(e) {
+        // console.log("tab clicked: %o", arguments);
+        if( e.detail.item.localName === 'paper-tab' ) {
+            var tab = e.detail.item;
+            this.view = tab.getAttribute('name');
+        }
+    },
+    
+    _computeFrameSrc: function(src, view) {
+        // Just do here once so demo doesn't keep loading
+        // everytime the view changes
+        if(this.src && !this._haveComputedFrameSrc && this.view.indexOf("demo:") !== -1){
+          this._frameSrc = new URL(this.view.split(':')[1], _baseUrl(this.src)).toString();
+          this._setDemoIframeSrc(); // Not the prettiest, but working
+          this._haveComputedFrameSrc = true;
+        }
+    },
+    
+    _setDemoIframeSrc: function() {
+        
+        /*
+        
+        DIDN'T WORK EITHER !!!
+        
+        var iframe = this.$.demo;
+        var iframeSrc = iframe.getAttribute('src');
+        iframe.setAttribute('src', this._frameSrc);
+        iframe.contentWindow.location.reload(true);
+        */
+        
+        /* <iframe id="demo" src="[[_frameSrc]]"></iframe> */
+        var iframeCon = this.$['demo-frame-con'];
+        elem = document.createElement("iframe");
+        elem.id = 'demo';
+        elem.src = this._frameSrc;
+        
+        /* Yes, I cried and kittens died. Not happy :( */
+        elem.style.border = 0;
+        elem.style.background = 'transparent';
+        elem.style.width = '100%';
+        elem.style.height = '82%';
+        elem.style.overflowX = 'none';
+        elem.style.overflowY = 'auto';
+        elem.style.position = 'absolute';
+        elem.style.top = '50px';
+        elem.style.left = '0px';
+        
+        iframeCon.appendChild(elem);
+    },
+
+    ready: function() {
+      var elements = this._loadJson();
+      if (elements) {
+        this.docElements = elements;
+        this._loading  = false;
+      } else {
+        // Make sure our change handlers trigger in all cases.
+        if (!this.src && !this._catalog) {
+          this._srcChanged();
+        }
+      }
+    },
+
+    /**
+     * Loads an array of hydrolysis element descriptors (as JSON) from the text
+     * content of this element, if present.
+     *
+     * @return {Array<hydrolysis.ElementDescriptor>} The descriptors, or `null`.
+     */
+    _loadJson: function() {
+      var textContent = '';
+      Array.prototype.forEach.call(Polymer.dom(this).childNodes, function(node) {
+        textContent = textContent + node.textContent;
+      });
+      textContent = textContent.trim();
+      if (textContent === '') return null;
+
+      try {
+        var json = JSON.parse(textContent);
+        if (!Array.isArray(json)) return [];
+        return json;
+      } catch(error) {
+        console.error('Failure when parsing JSON:', textContent, error);
+        throw error;
+      }
+    },
+
+    _srcChanged: function() {
+      var srcUrl;
+      if (this.docSrc) {
+        if (!this.$.ajax.lastRequest || (this.docSrc !== this.$.ajax.lastRequest.url && this.docSrc !== this._lastDocSrc)) {
+          this._ajaxLoading = true;
+          this._ajaxDesc = null;
+          this._activeDescriptor = null;
+          this.$.ajax.generateRequest();
+        }
+        this._lastDocSrc = this.docSrc;
+        return;
+      } else if (this.src) {
+        srcUrl = new URL(this.src, this.base).toString();
+      } else {
+        var base = _baseUrl(this.base);
+        srcUrl = new URL(base.match(/([^\/]*)\/$/)[1] + ".html", base).toString();
+      }
+      
+      // Rewrite gh-pages URLs to https://rawgit.com/
+      var match = srcUrl.match(/([^\/\.]+)\.github\.io\/([^\/]+)\/?([^\/]*)$/);
+      if (match) {
+        srcUrl = "https://cdn.rawgit.com/" + match[1] + "/" + match[2] + "/master/" + match[3];
+      }
+
+      this._baseUrl = _baseUrl(srcUrl);
+      this._srcUrl  = srcUrl;
+      if (!this._hydroLoading) this.$.analyzer.analyze();
+    },
+
+    _frameSrc: function(view) {
+      if(this.cachedFrameSrc !== undefined) {
+        return this.cachedFrameSrc;
+      } 
+      if (!view || view.indexOf("demo") !== 0) return "about:blank";
+      var src = view.split(':')[1];
+      // return new URL(src, this.base).toString();
+      if(this.src===undefined) {
+        return "about:blank";
+      }
+      this.cachedFrameSrc = new URL(src, _baseUrl(this.src)).toString();
+      return this.cachedFrameSrc
+    },
+
+    _descriptorsChanged: function() {
+      if (this._findDescriptor(this.active)) {
+        this._activeChanged();
+        return;
+      }
+
+      if (this.docElements && this.docElements[0]) {
+        this.active = this.docElements[0].is;
+      } else if (this.docBehaviors && this.docBehaviors[0]) {
+        this.active = this.docBehaviors[0].is;
+      } else {
+        this.active = null;
+      }
+    },
+
+    _findDescriptor: function(name) {
+      if (!this._analyzer) return null;
+
+      var descriptor = this._analyzer.elementsByTagName[name];
+      
+      if (descriptor) {
+        descriptor = this._addBehaviorDescriptors(descriptor);
+        return descriptor;
+      }
+
+      for (var i = 0; i < this._analyzer.behaviors.length; i++) {
+        if (this._analyzer.behaviors[i].is === name) {
+          return this._analyzer.behaviors[i];
+        }
+      }
+      return null;
+    },
+    
+    _addBehaviorDescriptors: function(descriptor) {
+    
+        var mergeStuff = function(orig, newStuff, name){
+            if(newStuff.hasOwnProperty(name)) {
+                for (var i = 0; i < newStuff[name].length; i++) {
+                    orig.push(newStuff[name][i]);
+                }
+            }
+        };
+        
+        descriptor.behaviorsDescs = {}; // by name
+        if(descriptor.behaviors.length>0){
+            for (var i = 0; i < descriptor.behaviors.length; i++) {
+                var behaviorName = descriptor.behaviors[i];
+                var behaviorDesc = null;
+                for (var j = 0; j < this._analyzer.behaviors.length; j++) {
+                    if (this._analyzer.behaviors[j].is === behaviorName) {
+                        behaviorDesc = this._analyzer.behaviors[j];
+                    }
+                }
+                // descriptor.behaviors[i] = behaviorDesc;
+                // Merge ... properties, events, methods
+                mergeStuff(descriptor.properties,   behaviorDesc, 'properties');
+                mergeStuff(descriptor.methods,      behaviorDesc, 'methods');
+                mergeStuff(descriptor.events,       behaviorDesc, 'events');
+                
+                descriptor.behaviorsDescs[behaviorName] = behaviorDesc;
+            }
+        }
+        
+        return descriptor;
+    },
+
+    _activeChanged: function() {
+      if(!this.active) {
+        return;
+      }
+      this.async(function() { this.$.active.value = this.active; });
+      if (this._analyzer && this._analyzer.elementsByTagName) {
+        this.$.headerPanel.scroller.scrollTop = 0;
+        this._activeDescriptor = this._findDescriptor(this.active);
+        if (this._activeDescriptor) {
+          var hasDemo;
+          var demos = this._activeDescriptor.demos;
+          if (this.view && demos && demos.length) {
+            var parts = this.view.split(':');
+            if (parts[0] == 'demo') {
+              if (parts[1]) {
+                hasDemo = demos.some(function(d, i) {
+                  if (d.path == parts[1]) {
+                    return true;
+                  }
+                });
+              }
+              if (!hasDemo) {
+                this.view = 'demo:' + demos[0].path;
+                hasDemo = true;
+              }
+            }
+          }
+          if (!hasDemo == undefined) {
+            this.view = 'docs';
+          }
+          if (this._activeDescriptor.is && !document.title) {
+            document.title = this._activeDescriptor.is + " documentation";
+          }
+        }
+        this._setDocDemos(this._activeDescriptor ? this._activeDescriptor.demos : []);
+      }
+    },
+
+    _loadingChanged: function() {
+      this.toggleClass('loaded', !this._loading);
+    },
+    _detectLoading: function() {
+      this._loading = this.docSrc ? this._ajaxLoading : this._hydroLoading;
+    },
+
+    _analyzerChanged: function() {
+      this._setDocElements(this._analyzer ? this._analyzer.elements : []);
+      this._setDocBehaviors(this._analyzer ? this._analyzer.behaviors : []);
+    },
+    _detectAnalyzer: function() {
+      this._analyzer = this.docSrc ? this._ajaxDesc : this._hydroDesc;
+    },
+
+    _handleAjaxResponse: function(e, req) {
+      this._ajaxLoading = false;
+      this._ajaxLastUrl = req.url;
+      this._ajaxDesc = req.response;
+    },
+
+    _handleComponentSelectedEvent: function(ev) {
+      var descriptor = this._findDescriptor(ev.detail);
+      if (!descriptor) {
+        console.warn("Could not navigate to ", ev.detail);
+      }
+      else {
+        this.active = ev.detail;
+      }
+    },
+
+    /**
+     * Renders this element into static HTML for offline use.
+     *
+     * This is mostly useful for debugging and one-off documentation generation.
+     * If you want to integrate doc generation into your build process, you
+     * probably want to be calling `hydrolysis.Analyzer.analyze()` directly.
+     *
+     * @return {string} The HTML for this element with all state baked in.
+     */
+    marshal: function() {
+      var jsonText = JSON.stringify(this.docElements || [], null, '  ');
+      return '<' + this.is + '>\n' +
+             jsonText.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '\n' +
+             '</' + this.is + '>';
+    },
+
+    _demoView: function(path) {
+      return "demo:" + path;
+    },
+    
+    _viewType: function(view) {
+      return view ? view.split(":")[0] : null;
+    },
+    
+    _viewTypePage: function(view) {
+        var vtype = this._viewType(view);
+        if(!vtype || vtype === 'demo') {
+            return 0;
+        }
+        return 1;
+    },
+    _viewTypePageName: function(view) {
+        var vtype = this._viewType(view);
+        if(!vtype || vtype === 'demo') {
+            return 'demo';
+        }
+        return 'docs';
+    }
+  });
+})();
+</script>

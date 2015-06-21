@@ -1,0 +1,48 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-gauge.html">
+
+<!--
+
+`hc-gauge` renders a HighCharts gauge chart.
+
+Example:
+    <hc-gauge
+        title="Daily Sales"
+        width="300"
+        height="300"
+        sub-text=""
+        max="500000"
+        format="0 a"
+        series='[{"name":"Daily Sales","data":[125000]}]'>
+    </hc-gauge>
+
+Click 'DEMO' in the top right for a live example.
+
+@package highcharts-elements
+@element hc-gauge
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-gauge">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-gauge'
+
+        , _gaugeType: 'donut'
+        
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BaseGauge
+        ]
+    });
+
+})();
+</script>

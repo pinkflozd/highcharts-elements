@@ -1,0 +1,239 @@
+
+:host {
+  @apply(--paper-font-body1);
+  display: block;
+  color: #212121;
+  margin-bottom: 5em;
+}
+
+:host > header {
+  @apply(--paper-font-headline);
+  margin-bottom: 18px;
+}
+
+paper-tabs {
+    --paper-tabs-selection-bar-color: green;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#api {
+  display: flex;
+  align-items: center;
+}
+#api header {
+  flex: 1;
+  padding-left: 16px;
+  @apply(--paper-font-subhead);
+}
+#api a {
+  @apply(--paper-font-button);
+  cursor: pointer;
+  display: block;
+  padding: 4px 16px;
+  color: var(--paper-grey-800);
+}
+
+/* Common Formatting */
+
+#summary {
+  padding: 4px 0;
+}
+
+#summary marked-element::shadow #content pre {
+  background-color: var(--paper-grey-50);
+  border: solid #e5e5e5;
+  border-width: 1px 0;
+  overflow-x: auto;
+  padding: 12px 24px;
+  font-size: 15px;
+}
+
+#summary marked-element::shadow #content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+#summary marked-element::shadow #content tr {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0 18px;
+}
+
+#summary marked-element::shadow #content td,
+#summary marked-element::shadow #content th {
+  padding: 6px 12px;
+}
+
+#summary marked-element::shadow #content td:first-child,
+#summary marked-element::shadow #content th:first-child {
+  padding-left: 24px;
+}
+
+#summary marked-element::shadow #content td:last-child,
+#summary marked-element::shadow #content th:last-child {
+  padding-right: 24px;
+}
+
+#summary marked-element::shadow #content code {
+  @apply(--paper-font-code1);
+}
+
+#summary marked-element::shadow #content p {
+  padding: 0 24px;
+}
+
+#summary marked-element::shadow #content a {
+  color: var(--paper-indigo-a200);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+#summary marked-element::shadow #content h1,
+#summary marked-element::shadow #content h2,
+#summary marked-element::shadow #content h3,
+#summary marked-element::shadow #content h4,
+#summary marked-element::shadow #content h5 {
+  padding: 0 18px;
+}
+
+/* Property Sections */
+
+.card {
+  background: white;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  @apply(--shadow-elevation-2dp);
+}
+
+.card > header {
+  padding: 14px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+lp-doc-property {
+  border-bottom: 1px solid #e5e5e5;
+}
+lp-doc-property:last-of-type {
+  border-bottom-width: 0;
+}
+
+/* Private Properties */
+
+lp-doc-property[private] {
+  display: none;
+}
+
+:host(.show-private) lp-doc-property[private] {
+  display: block;
+}
+
+lp-doc-property[configuration] {
+  display: none !important; /* Never. */
+}
+
+#behaviors > p {
+  border-bottom: 1px solid #e5e5e5;
+  box-sizing: border-box;
+  display: block;
+  padding: 16px 24px;
+  cursor: pointer;
+}
+
+#togglePrivate {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#all-properties-none-found, #all-methods-none-found {
+    padding: 4em 2em;
+    text-align: center;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+article.accordion
+{
+	display: block;
+	width: auto;
+	padding: 0.5em 0.5em 1px 0.5em;
+	margin: 0 auto;
+	/* background-color: #666;
+	border-radius: 5px;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.3); */
+}
+
+article.accordion section
+{
+	display: block;
+	width: auto;
+	height: 6em;
+	padding: 0;
+	margin: 0 0 0.5em 0;
+	color: #333;
+	background-color: inherit;
+	overflow: hidden;
+	border-radius: 3px;
+}
+
+article.accordion section header
+{
+	font-size: 1em;
+	font-weight: bold;
+	width: 100%;
+	line-height: 2em;
+	padding: 0;
+	margin: 0;
+	color: #ddd;
+    padding: 14px 24px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 400;
+    color: #212121;
+    font-family: 'Roboto', 'Noto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+article.accordion section header a
+{
+	display: block;
+	width: 100%;
+	line-height: 2em;
+	text-decoration: none;
+	color: inherit;
+	outline: 0 none;
+}
+
+article.accordion section,
+article.accordion section header
+{
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+article.accordion section:target
+{
+	height: 15em;
+	background-color: #fff;
+}
+
+article.accordion section:target header
+{
+	font-size: 1.6em;
+	color: #333;
+}
+
+article.accordion section.open {
+    height: auto;
+}

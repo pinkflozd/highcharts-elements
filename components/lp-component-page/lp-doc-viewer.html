@@ -1,0 +1,371 @@
+<link rel="import" href="../marked-element/marked-element.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../prism-element/prism-highlighter.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="lp-doc-property.html">
+
+<!--
+Renders documentation describing an element's API.
+
+`lp-doc-viewer` renders element and behavior descriptions as extracted by
+[Hydrolysis](https://github.com/PolymerLabs/hydrolysis). You can provide them
+either via binding...
+
+    <lp-doc-viewer descriptor="{{elementDescriptor}}"></lp-doc-viewer>
+
+...or by placing the element descriptor in JSON as the text content of an
+`lp-doc-viewer`:
+
+    <lp-doc-viewer>
+      {
+        "is": "awesome-sauce",
+        "properties": [
+          {"name": "isAwesome", "type": "boolean", "desc": "Is it awesome?"},
+        ]
+      }
+    </lp-doc-viewer>
+
+However, be aware that due to current limitations in Polymer 0.8, _changes_ to
+the text content will not be respected, only the initial value will be loaded.
+If you wish to update the documented element, please set it via the `descriptor`
+property.
+
+@demo demo/index.html Basic Demo
+-->
+<dom-module id="lp-doc-viewer">
+
+  <link rel="import" type="css" href="lp-doc-viewer.css">
+
+  <template>
+    <prism-highlighter></prism-highlighter>
+
+    <section id="summary" class="card" hidden$="[[!descriptor.desc]]">
+      <header>Usage</header>
+      <marked-element markdown="{{descriptor.desc}}"></marked-element>
+    </section>
+
+    <paper-tabs noink selected="0" selectedindex="0">
+        <paper-tab name="api-all" index="0">All</paper-tab>
+        <paper-tab name="api-inherited" index="1">Behaviors</paper-tab>
+    </paper-tabs>
+
+    <iron-pages selected="{{_tabSelected}}" selectedindex="0">
+        <paper-material id="api-all" name="api-all">
+            <paper-button id="togglePrivate" class="togglePrivate" on-tap="_togglePrivate">{{_privateToggleLabel}}</paper-button> 
+            <article class="accordion all">
+                <section id="all-properties" class="open">
+                    <header><a href="#all-properties" on-click="_handleAccordionClick">Properties<paper-icon-button icon="arrow-drop-down"></paper-icon-button></a></header>
+                    <template is="dom-repeat" items="{{_properties}}" hidden$="{{!_properties.length}}">
+                        <lp-doc-property descriptor="{{item}}"></lp-doc-property>
+                    </template>
+                    <template is="dom-if" if="{{_arrayEmpty(_properties)}}">
+                        <div id="all-properties-none-found">
+                            No properties found.
+                        </div>
+                    </template>
+                </section>
+                <section id="all-methods" class="open">
+                    <header><a href="#all-methods" on-click="_handleAccordionClick">Methods<paper-icon-button icon="arrow-drop-down"></paper-icon-button></a></header>
+                    <template is="dom-repeat" items="{{_methods}}">
+                        <lp-doc-property descriptor="{{item}}"></lp-doc-property>
+                    </template>
+                    <template is="dom-if" if="{{_arrayEmpty(_methods)}}">
+                        <div id="all-methods-none-found">
+                            No methods found.
+                        </div>
+                    </template>
+                </section>
+            </article>
+        </paper-material>
+        <paper-material id="api-inherited" name="api-inherited">
+            <paper-button id="togglePrivate" class="togglePrivate" on-tap="_togglePrivate">{{_privateToggleLabel}}</paper-button>
+            <template is="dom-if" if="{{!_arrayEmpty(_behaviors)}}">
+                <article class="accordion inherited">
+                    <template is="dom-repeat" items="{{_behaviors}}" hidden$="{{!_behaviors.length}}">
+                        <section id="inherited-properties" class="">
+                            <header><a href="#inherited-properties" on-click="_handleAccordionClick">{{item}}<paper-icon-button icon="arrow-drop-down"></paper-icon-button></a></header>
+                            <template is="dom-repeat" as="prop" items="{{_getBehaviorDescPropsByName(item, descriptor)}}">
+                                <lp-doc-property descriptor="{{prop}}"></lp-doc-property>
+                            </template>
+                        </section>
+                    </template>
+                </article>
+            </template>
+            <template is="dom-if" if="{{_arrayEmpty(_behaviors)}}">
+                <div id="inherited-properties-none-found">
+                    No behaviors found.
+                </div>
+            </template>
+        </paper-material>
+    </iron-pages>
+
+    <!--
+    <section id="properties" class="card" hidden$="{{_noneToShow(_showPrivate,_properties)}}">
+      <header>Properties</header>
+      <template is="dom-repeat" items="{{_properties}}" hidden$="{{!_properties.length}}">
+        <lp-doc-property descriptor="{{item}}"></lp-doc-property>
+      </template>
+    </section>
+
+    <section id="methods" class="card"  hidden$="{{_noneToShow(_showPrivate,_methods)}}">
+      <header>Methods</header>
+      <template is="dom-repeat" items="{{_methods}}">
+        <lp-doc-property descriptor="{{item}}"></lp-doc-property>
+      </template>
+    </section>
+
+    <section id="events" class="card" hidden$="{{_noneToShow(_showPrivate,_events)}}">
+      <header>Events</header>
+      <template is="dom-repeat" items="{{_events}}">
+        <lp-doc-property descriptor="{{item}}"></lp-doc-property>
+      </template>
+    </section>
+
+    <section id="behaviors" class="card" hidden$="{{_hideBehaviors(_behaviors)}}">
+      <header>Behaviors</header>
+      <template is="dom-repeat" items="{{_behaviors}}">
+        <p on-click="_broadcastBehavior">{{item}}</p>
+      </template>
+    </section>
+    -->
+    
+  </template>
+
+</dom-module>
+
+<script>
+(function() {
+
+  Polymer({
+
+    is: 'lp-doc-viewer',
+
+    properties: {
+
+      /**
+       * The [Hydrolysis](https://github.com/PolymerLabs/hydrolysis)-generated
+       * element descriptor to display details for.
+       *
+       * Alternatively, the element descriptor can be provided as JSON via the text content
+       * of this element.
+       *
+       * @type {hydrolysis.ElementDescriptor}
+       */
+      descriptor: {
+        type: Object,
+        observer: '_descriptorChanged',
+      },
+
+      /** Whether private properties should be hidden or shown. */
+      _showPrivate: {
+        type:     Boolean,
+        value:    false,
+        observer: '_showPrivateChanged',
+      },
+
+      /** The label to show for the Private API toggle. */
+      _privateToggleLabel: String,
+
+      /**
+       * Broadcast when another component is clicked on
+       * @param {String} detail name of the component
+       * lp-doc-viewer container should load component if possible
+       * @event lp-doc-viewer-component-selected
+       */
+       
+       _tabSelected: {
+            type:     Number,
+            value:    0
+       },
+        
+      _behaviorDescs: {
+        type: Array,
+        value: []
+      }
+    },
+    
+    listeners: {
+      'iron-select': '_onTabChanged'
+    },
+    
+    _onTabChanged: function(e) {
+        this.debounce('changePage', function(e) {
+            if( e.detail.item.localName === 'paper-tab' ) {
+                var tab = e.detail.item;
+                this._tabSelected = tab.getAttribute('index');
+            }
+        }.bind(this,e), 500);  
+    },
+    
+    _arrayEmpty: function(arr) {
+        return arr.length===0; 
+    },
+
+    ready: function() {
+      var jsonDescriptor = this._loadJson();
+      // Note that this is only an error during element creation. You are free
+      // to stomp over the descriptor after it is ready.
+      if (jsonDescriptor && this.descriptor) {
+        console.error(
+            this,
+            'received both a bound descriptor:', this.descriptor,
+            'and JSON descriptor:', this._jsonDescriptor,
+            'Please provide only one');
+        throw new Error(
+            '<lp-doc-viewer> accepts either a bound or JSON descriptor; not both');
+      }
+
+      if (jsonDescriptor) {
+        this.descriptor = jsonDescriptor;
+      }
+    },
+    
+    _getBehaviorDescPropsByName: function(name, descriptor) {
+        if(descriptor && descriptor.behaviorsDescs && descriptor.behaviorsDescs[name]){
+            return descriptor.behaviorsDescs[name].properties;
+        }
+        return [];    
+    },
+    
+    _handleAccordionClick: function(e) {
+        e.preventDefault();
+        var target = e.target;
+        if(target.localName !== 'a') {
+            target = this._getClosest(target, 'a');
+        }
+        if(!target) {
+            return;
+        }
+        var accordion = this._getClosest(target, 'article');
+        /* var whichAccordion = 'all';
+        if(this._hasClass(accordion,'inherited')) {
+            whichAccordion = 'inherited';
+        } */
+        var targetSection = this._getClosest(target, 'section');
+        if(this._hasClass(accordion,'all')){
+            var panes = this.$['api-all'].querySelectorAll('section');
+        } else {
+            var panes = this.$['api-inherited'].querySelectorAll('section');
+        }
+            
+        // Close others
+        for (var i = 0; i < panes.length; ++i) {
+            if(targetSection!=panes[i]) {
+                this.toggleClass('open', false, panes[i]);
+            }   
+        }
+        // Toggle clicked
+        var clickedPane = this.$[target.hash.substring(1)];
+        if(clickedPane) {
+            this.toggleClass('open', !this._hasClass(clickedPane,'open'), clickedPane);
+        } else {
+            this.toggleClass('open', !this._hasClass(targetSection,'open'), targetSection);
+        }
+            
+        return false;
+    },
+    
+    // TODO: This and toggle classes stuff in reusable behavior
+    _getClosest: function(el, tag) {
+        // this is necessary since nodeName is always in upper case
+        tag = tag.toUpperCase();
+        do {
+          if (el.nodeName === tag) {
+            return el;
+          }
+        } while (el = el.parentNode);
+        return null;
+    },
+    
+    _hasClass: function(el, clazz) {
+        return el.classList.contains(clazz);
+    },
+
+    /**
+     * Loads a hydrolysis element descriptor (as JSON) from the text content of
+     * this element, if present.
+     *
+     * @return {hydrolysis.ElementDescriptor} The parsed descriptor, or `null`.
+     */
+    _loadJson: function() {
+      var textContent = '';
+      Array.prototype.forEach.call(Polymer.dom(this).childNodes, function(node) {
+        textContent = textContent + node.textContent;
+      });
+      textContent = textContent.trim();
+      if (textContent === '') return null;
+
+      try {
+        return JSON.parse(textContent);
+      } catch(error) {
+        console.error('Failure when parsing JSON:', textContent, error);
+        throw error;
+      }
+    },
+
+    /** Converts `descriptor` into our template-friendly `_model`. */
+    _descriptorChanged: function() {
+      if (!this.descriptor) return;
+
+      // Split the documented properties between functions and other types.
+      var properties = [];
+      var methods    = [];
+
+      for (var i = 0, property; property = this.descriptor.properties[i]; i++) {
+        (property.type === 'Function' ? methods : properties).push(property);
+      }
+      this._properties      = properties;
+      this._methods         = methods;
+      this._events          = this.descriptor.events || [];
+      this._behaviors       = this.descriptor.behaviors || [];
+      this._behaviorDescs   = this.descriptor.behaviorDescs || [];
+
+      this.toggleAttribute('abstract', this.descriptor.abstract);
+    },
+
+    _collapsedChanged: function() {
+      this._collapseToggleLabel = this._collapsed ? 'expand' : 'collapse';
+
+      // Bound values aren't exposed to dom-repeat's scope.
+      var properties = this.querySelectorAll('lp-doc-property');
+      for (var i = 0, property; property = properties[i]; i++) {
+        property.collapsed = this._collapsed;
+      }
+    },
+
+    _toggleCollapsed: function() {
+      this._collapsed = !this._collapsed;
+    },
+
+    _showPrivateChanged: function() {
+      this._privateToggleLabel = (this._showPrivate ? 'hide' : 'show') + ' private API';
+      this.toggleClass('show-private', this._showPrivate);
+    },
+
+    _togglePrivate: function() {
+      this._showPrivate = !this._showPrivate;
+    },
+
+    _noneToShow: function(showPrivate, items) {
+      for (var i = 0; i < items.length; i++) {
+        if (showPrivate || !items[i].private) return false;
+      }
+      return true;
+    },
+
+    _hideBehaviors: function(behaviors) {
+      return behaviors === null || behaviors.length === 0;
+    },
+
+    _broadcastBehavior: function(ev) {
+      this.fire('lp-doc-viewer-component-selected', ev.target._templateInstance.item);
+    }
+  });
+
+})();
+</script>

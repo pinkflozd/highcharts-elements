@@ -1,0 +1,58 @@
+{
+  "name": "highcharts-elements",
+  "version": "0.0.3",
+  "description": "A library of polymer elements for rendering highcharts",
+  "homepage": "https://github.com/<USERNAME>/highcharts-elements/",
+  "keywords": [
+    "pie",
+    "bar",
+    "column",
+    "area",
+    "line",
+    "bubble",
+    "scatter",
+    "areaspline",
+    "pyramid",
+    "funnel",
+    "gauge",
+    "donut",
+    "charts",
+    "highchart",
+    "highcharts",
+    "polymer",
+    "web-components"
+  ],
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    "**/.*",
+    "bower_components",
+    "test"
+  ],
+  "main": "highcharts-elements.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#v1.0.3",
+    "highcharts": "highcharts-release#v4.1.5",
+    "numeral": "adamwdraper/Numeral-js#1.5.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page",
+    "web-component-tester": "*",
+    "paper-tabs": "PolymerElements/paper-tabs",
+    "paper-toolbar": "PolymerElements/paper-toolbar",
+    "paper-material": "PolymerElements/paper-material",
+    "iron-pages": "PolymerElements/iron-pages",
+    "basic-seamless-iframe": "basic-web-components/basic-seamless-iframe",
+    "basic-framed-content": "basic-web-components/basic-framed-content",
+    "iron-grid": "jmcgdz/iron-grid",
+    "codemirror": "codemirror/CodeMirror#5.2.0",
+    "jquery": "~2.1.4",
+    "back-to-top": "CodyHouse/back-to-top",
+    "lp-component-page": "linchpinio/lp-component-page"
+  },
+  "resolutions": {
+    "polymer": "v1.0.3",
+    "webcomponentsjs": "^0.7.2"
+  }
+}

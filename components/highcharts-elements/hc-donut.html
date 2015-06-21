@@ -1,0 +1,46 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-pie.html">
+
+<!--
+
+`hc-donut` renders a HighCharts donut chart.
+
+Example:
+    <hc-donut
+        title="Simple Donut"
+        width="400"
+        height="300"
+        hide-labels
+        series='[{"type":"pie","name":"Browser share","data":[["Firefox",45],["IE",26.8],{"name":"Chrome","y":12.8},["Safari",8.5],["Opera",6.2],["Others",0.7]]}]'>
+    </hc-donut>
+
+Click 'DEMO' in the top right for a live example.
+
+@package highcharts-elements
+@element hc-donut
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-donut">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-donut'
+
+        , _pieType: 'donut'
+        
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BasePie
+        ]
+    });
+
+})();
+</script>

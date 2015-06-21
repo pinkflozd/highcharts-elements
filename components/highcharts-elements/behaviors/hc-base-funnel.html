@@ -1,0 +1,73 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../imports.html">
+<link rel="import" href="../hc-ns.html">
+
+<script>
+     
+    /**
+    * `HighChartsElement.BaseFunnel` is the base class for different types of funnel charts, like funnel and pyramid.
+    *
+    * @polymerBehavior HighChartsElement.BaseFunnel
+    **/
+    HighChartsElement.BaseFunnelImpl = {
+        
+        properties: {
+            type: {
+              type: String,
+              value: 'funnel'
+            }
+        }
+        
+        , _createChartOptions: function() { var self = this;
+            
+            var options = {
+                chart: {
+                    type: self.type,
+                    marginRight: 0
+                },
+                title: {
+                    x: -50
+                },
+                plotOptions: {
+                    series: {
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b> ({point.y:,.0f})',
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                            softConnector: true
+                        },
+                        neckWidth: '30%',
+                        neckHeight: '25%'
+
+                        //-- Other available options
+                        // height: pixels or percent
+                        // width: pixels or percent
+                    }
+                },
+                series: self.series
+            };
+            
+            if(!options.series[0].dataLabels) {
+                options.series[0].dataLabels = {};
+            }
+            options.series[0].dataLabels.enabled = !self.hideLabels;
+            
+            if(self.type==='pyramid') {
+                return self._handlePyramidType(options);
+            } else {
+                return options;
+            }   
+        }
+        
+        , _handlePyramidType: function(options) { var self = this;
+
+            options.plotOptions.series.neckWidth  = 0;
+            options.plotOptions.series.neckHeight = 0;
+
+            return options;
+        }
+        
+    };
+    
+    HighChartsElement.BaseFunnel = [HighChartsElement.BaseFunnelImpl];
+</script>

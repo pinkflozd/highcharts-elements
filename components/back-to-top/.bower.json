@@ -1,0 +1,13 @@
+{
+  "name": "back-to-top",
+  "homepage": "https://github.com/CodyHouse/back-to-top",
+  "_release": "88ee6f1c03",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "88ee6f1c0361dd37f1f88330607ac561ad5b6c7f"
+  },
+  "_source": "git://github.com/CodyHouse/back-to-top.git",
+  "_target": "*",
+  "_originalSource": "CodyHouse/back-to-top"
+}

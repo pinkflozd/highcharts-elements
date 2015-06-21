@@ -1,0 +1,47 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-gauge.html">
+
+<!--
+
+`hc-gauge-semi` renders a HighCharts semi gauge chart.
+
+Example:
+    <hc-gauge-semi
+        title="A Speedy Gauge"
+        width="300"
+        height="300"
+        sub-text="MPH"
+        max="100"
+        series='[{"name":"Speed","data":[80]}]'>
+    </hc-gauge-semi>
+
+Click 'DEMO' in the top right for a live example.
+
+@package highcharts-elements
+@element hc-gauge-semi
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-gauge-semi">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-gauge-semi'
+
+        , _gaugeType: 'semi'
+        
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BaseGauge
+        ]
+    });
+
+})();
+</script>

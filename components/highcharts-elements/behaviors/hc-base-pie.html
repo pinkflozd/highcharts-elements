@@ -1,0 +1,110 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../imports.html">
+<link rel="import" href="../hc-ns.html">
+
+<script>
+    
+    /**
+    * `HighChartsElement.BasePie` is the base class for different types
+    * of pie charts, like donut.
+    *
+    * @polymerBehavior HighChartsElement.BasePie
+    **/
+    HighChartsElement.BasePieImpl = {
+        
+        properties: {
+        
+            pointSelect: {
+              type: Boolean,
+              value: false
+            }
+        }
+            
+        , _pieType: null
+        
+        ,  _createChartOptions: function() { var self = this;
+            
+            var options = {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: self.pointSelect,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: !self.hideLabels,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: self.series
+            };
+            
+            return self._handlePieTypes(options);
+        }
+        
+        , _handlePieTypes: function(options) { var self = this;
+            if(typeof self._pieType === 'string') {
+                if(self._pieType==='donut-semi') {
+                    if(!options.title) { options.title = {}; }
+                    options.title.align         = 'center';
+                    options.title.verticalAlign = 'middle';
+                    options.title.y             = 50;
+                    
+                    if(!options.tooltip) { options.tooltip = {}; }
+                    options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    
+                    options.plotOptions.pie.allowPointSelect = false;
+                    options.plotOptions.pie.startAngle  = -90;
+                    options.plotOptions.pie.endAngle    = 90;
+                    options.plotOptions.pie.center      = ['50%', '75%'];
+                    
+                    options.plotOptions.pie.dataLabels = {
+                        enabled: true,
+                        distance: -50,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white',
+                            textShadow: '0px 1px 2px black'
+                        }
+                    };
+                    
+                    try {
+                        options.series[0].innerSize = '50%';
+                    } catch(ex){
+                        console.error("Error setting innerSize on first series: %o", ex);
+                    }
+                }
+                if(self._pieType==='donut') {
+                    if(!options.title) { options.title = {}; }
+
+                    options.plotOptions.pie = {
+                        innerSize: 100,
+                        depth: 45
+                    };
+                    
+                    options.plotOptions.pie.dataLabels = {};
+                    options.plotOptions.pie.dataLabels.enabled = !self.hideLabels;
+                    
+                    /*try {
+                        options.series[0].innerSize = '50%';
+                    } catch(ex){
+                        console.error("Error setting innerSize on first series: %o", ex);
+                    }*/
+                }
+            }
+            return options;
+        }
+    };
+    
+    HighChartsElement.BasePie = [HighChartsElement.BasePieImpl];
+</script>
