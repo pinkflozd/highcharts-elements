@@ -1,6 +1,6 @@
 {
   "name": "highcharts-elements",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A library of polymer elements for rendering highcharts",
   "homepage": "https://github.com/<USERNAME>/highcharts-elements/",
   "keywords": [
@@ -48,7 +48,8 @@
     "iron-grid": "jmcgdz/iron-grid",
     "codemirror": "codemirror/CodeMirror#5.2.0",
     "jquery": "~2.1.4",
-    "back-to-top": "CodyHouse/back-to-top"
+    "back-to-top": "CodyHouse/back-to-top",
+    "lp-component-page": "linchpinio/lp-component-page"
   },
   "resolutions": {
     "polymer": "v1.0.3",
