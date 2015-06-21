@@ -54,11 +54,11 @@
     "polymer": "v1.0.3",
     "webcomponentsjs": "^0.7.2"
   },
-  "_release": "a402266b9a",
+  "_release": "f1b5e175cf",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "a402266b9a36d76f97f88e7397c8553de81ffde2"
+    "commit": "f1b5e175cfa10486b21c69db48da9aac9bafc943"
   },
   "_source": "git://github.com/linchpinio/highcharts-elements.git",
   "_target": "master",
