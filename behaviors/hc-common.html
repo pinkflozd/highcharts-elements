@@ -94,7 +94,8 @@
             
             , series: {
                 type: Array,
-                value: null
+                value: null,
+                observer: '_updateData'
             }
             
             , debug: {
@@ -226,6 +227,31 @@
             }.bind(self), 1);  
         }
        
+        , _updateData: function(newData, oldData) { var self = this;
+            self.async( function(){ var self = this;
+                if(self._chart){
+                    try {
+                        self._chart.series.forEach( function(el, i, list) {
+                            
+                            // Update the name only, not data yet
+                            el.update({name:newData[i].name}, false);
+                            self._chart.redraw(); // Need this here, or data doesn't update
+                            
+                            // Have to update points to get smooth transitions
+                            el.data.forEach( function(point, pi, list) {
+                                point.update(newData[i].data[pi], false);
+                            });
+                            self._chart.redraw();
+                            
+                            // Now need to add any new points
+                            // TODO: 
+                        });
+                    } catch(e) {
+                        console.log('hc-common behavior: Error updating data '+e);
+                    }
+                }
+            }.bind(self), 1);  
+        }
     };
     
     HighChartsElement.Common = [HighChartsElement.CommonImpl];
