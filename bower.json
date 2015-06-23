@@ -33,7 +33,7 @@
   "main": "highcharts-elements.html",
   "dependencies": {
     "polymer": "Polymer/polymer#v1.0.3",
-    "highcharts": "highcharts-release#v4.1.5",
+    "highcharts": "highcharts-release#v4.1.6",
     "numeral": "adamwdraper/Numeral-js#1.5.3"
   },
   "devDependencies": {

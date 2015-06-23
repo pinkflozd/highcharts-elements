@@ -231,21 +231,70 @@
             self.async( function(){ var self = this;
                 if(self._chart){
                     try {
-                        self._chart.series.forEach( function(el, i, list) {
+                    
+                        // self._chart.options.series = newData;
+                    
+                        var elementType = self.nodeName;
+                        if(elementType === 'HC-GAUGE') {
+                        
+                            self._chart.series[0].setData(newData[0].data);
                             
-                            // Update the name only, not data yet
-                            el.update({name:newData[i].name}, false);
-                            self._chart.redraw(); // Need this here, or data doesn't update
+                            // Get the point
+                            var point = self._chart.series[0].data[0];
                             
-                            // Have to update points to get smooth transitions
-                            el.data.forEach( function(point, pi, list) {
-                                point.update(newData[i].data[pi], false);
-                            });
+                            // Update value
+                            point.dataLabel.attr({ text: self._getGaugeDataLabelFormat(self._chart.options) });
+                            
+                        } else if(elementType === 'HC-GAUGE-SEMI') {
+                        
+                            
+                            self._chart.series[0].dataLabelsGroup.div.innerHTML = self._getSemiGaugeDataLabelFormat(self._chart.options);
+                            self._chart.series[0].setData([500000]);
                             self._chart.redraw();
                             
-                            // Now need to add any new points
-                            // TODO: 
-                        });
+                        } else {
+                            
+                            self._chart.series.forEach( function(el, i, list) {
+
+                                // Update the name only, not data yet
+                                el.update({name:newData[i].name}, false);
+                                self._chart.redraw(); // Need this here, or data doesn't update
+
+                                // Have to update points to get smooth transitions
+                                if(false) {
+                                    
+                                    // Note, this only gives smooth transitions 
+                                    // if not adding new points also
+                                    el.setData(newData[i].data);
+                                    el.drawDataLabels();
+                                    self._chart.redraw();
+                                    
+                                } else {
+                                    /*
+                                    el.data.forEach( function(point, pi, list) {
+                                        point.update(newData[i].data[pi], false);
+                                    });
+                                    */
+                                    el.setData( newData[i].data.slice(0,el.data.length) );
+                                    self._chart.redraw();
+
+                                    // Data Labels ( or gauge center number does not change )
+                                    el.drawDataLabels();
+                                    self._chart.redraw();
+                                    
+                                    // Now need to add any new points
+                                    // This way we still get smooth transitions for new points
+                                    var lengthDiff = newData[i].data.length-el.data.length;
+                                    if(lengthDiff>0) {
+                                        for (npi = 0; npi < lengthDiff; npi++) { 
+                                            var index = el.data.length+npi;
+                                            el.addPoint(newData[i].data[index], true, true);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                      
                     } catch(e) {
                         console.log('hc-common behavior: Error updating data '+e);
                     }
