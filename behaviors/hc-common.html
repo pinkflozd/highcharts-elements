@@ -243,14 +243,31 @@
                             var point = self._chart.series[0].data[0];
                             
                             // Update value
-                            point.dataLabel.attr({ text: self._getGaugeDataLabelFormat(self._chart.options) });
+                            // Even though we updated the series in the chart,
+                            // there seems to be a timing issue where the actual chart options
+                            // don't have the same data, thus the number flips back. 
+                            // Probably async data setting because of animation
+                            // Trying polymer async, else try cloning options
+                            self.async( function(){ var self = this;
+                                point.dataLabel.attr({ text: self._getGaugeDataLabelFormat(self._chart.options) });
+                            }.bind(self), 1000);
                             
                         } else if(elementType === 'HC-GAUGE-SEMI') {
                         
+                            self._chart.series[0].setData(newData[0].data);
                             
-                            self._chart.series[0].dataLabelsGroup.div.innerHTML = self._getSemiGaugeDataLabelFormat(self._chart.options);
-                            self._chart.series[0].setData([500000]);
-                            self._chart.redraw();
+                            // Get the point
+                            var point = self._chart.series[0].data[0];
+                            
+                            // Update value
+                            // Even though we updated the series in the chart,
+                            // there seems to be a timing issue where the actual chart options
+                            // don't have the same data, thus the number flips back. 
+                            // Probably async data setting because of animation
+                            // Trying polymer async, else try cloning options
+                            self.async( function(){ var self = this;
+                                point.dataLabel.attr({ text: self._getSemiGaugeDataLabelFormat(self._chart.options) });
+                            }.bind(self), 1000);
                             
                         } else {
                             
