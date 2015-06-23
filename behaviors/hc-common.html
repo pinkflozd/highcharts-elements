@@ -177,6 +177,15 @@
                     }
                 }
                 
+                var elementType = self.nodeName;
+                        
+                // Add type if needed
+                if(elementType === 'HC-PIE') {
+                    chartOptions.series.forEach( function(el, i, list) {
+                        el.type = 'pie';
+                    });
+                }
+                
                 if(typeof self.options === 'object') {
                     chartOptions = Highcharts.merge(chartOptions, self.options);
                 }
@@ -232,9 +241,15 @@
                 if(self._chart){
                     try {
                     
-                        // self._chart.options.series = newData;
-                    
                         var elementType = self.nodeName;
+                        
+                        // Add type if needed
+                        if(elementType === 'HC-PIE') {
+                            self._chart.series.forEach( function(el, i, list) {
+                                el.type = 'pie';
+                            });
+                        }
+                    
                         if(elementType === 'HC-GAUGE') {
                         
                             self._chart.series[0].setData(newData[0].data);
