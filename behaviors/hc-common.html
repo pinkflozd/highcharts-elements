@@ -283,7 +283,11 @@
                             self.async( function(){ var self = this;
                                 point.dataLabel.attr({ text: self._getSemiGaugeDataLabelFormat(self._chart.options) });
                             }.bind(self), 1000);
-                            
+                          
+                        } else if(elementType === 'HC-PIE') {
+                        
+                            self._chart.series[0].setData(newData[0].data);
+                        
                         } else {
                             
                             self._chart.series.forEach( function(el, i, list) {
