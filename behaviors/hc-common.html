@@ -304,6 +304,7 @@
                                     el.setData(newData[i].data);
                                     el.drawDataLabels();
                                     self._chart.redraw();
+                                    self._chart.reflow();
                                     
                                 } else {
                                     /*
@@ -321,14 +322,26 @@
                                     // Now need to add any new points
                                     // This way we still get smooth transitions for new points
                                     var lengthDiff = newData[i].data.length-el.data.length;
+                                    var seriesLength = el.data.length;
                                     if(lengthDiff>0) {
                                         for (npi = 0; npi < lengthDiff; npi++) { 
-                                            var index = el.data.length+npi;
-                                            el.addPoint(newData[i].data[index], true, true);
+                                            var index = seriesLength+npi;
+                                            el.addPoint(newData[i].data[index], true, false);
                                         }
+                                        self._chart.reflow();
                                     }
                                 }
                             });
+                            
+                            // Now add new series
+                            if(self._chart.series.length<newData.length) {
+                                var numNewSeries = newData.length-self._chart.series.length;
+                                var seriesLength = self._chart.series.length;
+                                for (nsi = 0; nsi < numNewSeries; nsi++) { 
+                                    var index = seriesLength+nsi;
+                                    self._chart.addSeries(newData[index]);
+                                }
+                            }
                         }
                       
                     } catch(e) {
