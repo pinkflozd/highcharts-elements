@@ -52,7 +52,8 @@
     "lp-component-page": "linchpinio/lp-component-page"
   },
   "resolutions": {
-    "polymer": "v1.0.3",
-    "webcomponentsjs": "^0.7.2"
+    "polymer": "v1.0.4",
+    "webcomponentsjs": "^0.7.2",
+    "highcharts": "v4.1.6"
   }
 }

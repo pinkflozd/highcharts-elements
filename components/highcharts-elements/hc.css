@@ -7,3 +7,7 @@
 :host #chartContainer {
     margin: 0 auto;
 }
+
+:host /deep/ .highcharts-container { 
+    overflow: visible !important; 
+}

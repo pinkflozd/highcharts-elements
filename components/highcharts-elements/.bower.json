@@ -31,8 +31,8 @@
   ],
   "main": "highcharts-elements.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#v1.0.3",
-    "highcharts": "highcharts-release#v4.1.5",
+    "polymer": "Polymer/polymer#v1.0.4",
+    "highcharts": "highcharts-release#v4.1.6",
     "numeral": "adamwdraper/Numeral-js#1.5.3"
   },
   "devDependencies": {
@@ -42,8 +42,6 @@
     "paper-toolbar": "PolymerElements/paper-toolbar",
     "paper-material": "PolymerElements/paper-material",
     "iron-pages": "PolymerElements/iron-pages",
-    "basic-seamless-iframe": "basic-web-components/basic-seamless-iframe",
-    "basic-framed-content": "basic-web-components/basic-framed-content",
     "iron-grid": "jmcgdz/iron-grid",
     "codemirror": "codemirror/CodeMirror#5.2.0",
     "jquery": "~2.1.4",
@@ -51,14 +49,14 @@
     "lp-component-page": "linchpinio/lp-component-page"
   },
   "resolutions": {
-    "polymer": "v1.0.3",
+    "polymer": "v1.0.4",
     "webcomponentsjs": "^0.7.2"
   },
-  "_release": "a14980ad04",
+  "_release": "490c9a42d0",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "a14980ad0450e87eac4c544cceecca2850033425"
+    "commit": "490c9a42d076f222f3198de50192341c19fe15cc"
   },
   "_source": "git://github.com/linchpinio/highcharts-elements.git",
   "_target": "master",

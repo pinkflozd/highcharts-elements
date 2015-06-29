@@ -43,6 +43,14 @@
         
         
         ,  _format: function(number) { var self = this;
+            // Sometimes this comes in as an array
+            if( Array.isArray(number) ) {
+                number = number[0];
+            }
+            // Sometimes this array is an object
+            if( typeof number === 'object' ) {
+                number = number.y;
+            }
             return numeral(number).format(self.format);
         }
         
