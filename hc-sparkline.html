@@ -1,0 +1,42 @@
+<link rel="import" href="behaviors/hc-common.html">
+<link rel="import" href="behaviors/hc-base-chart.html">
+
+<!--
+
+`hc-sparkline` renders a HighCharts bar chart.
+
+Example:
+
+    <hc-sparkline
+        title="A Aparkline"
+        series='[2,10,32,100,84,120,95,155]'>
+    </hc-sparkline>
+
+
+
+@package highcharts-elements
+@element hc-sparkline
+@homepage http://linchpinio.github.io/highcharts-elements
+@demo demo/all.html
+-->
+<dom-module id="hc-sparkline">
+    <link rel="import" type="css" href="hc.css">
+    <template>
+        <div id="chartContainer" style=""></div>
+    </template>
+</dom-module>
+<script>
+(function() { 
+
+    Polymer({
+
+        is: 'hc-sparkline'
+
+        , behaviors: [
+            HighChartsElement.Common
+            , HighChartsElement.BaseChart
+        ]
+    });
+
+})();
+</script>

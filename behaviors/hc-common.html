@@ -125,10 +125,13 @@
         }
         
         , _commonChartOptions: function(options) { var self = this;
+        
             // Handle common properties (TODO: Maybe deep merging)
-            options.chart.renderTo     = self._getChartElement()
+            options.chart.renderTo     = self._getChartElement();
+            
             options.chart.width        = (self.width?self.width:null)
             options.chart.height       = (self.height?self.height:null)
+                
             options.chart.animation    = self.animation;
             options.chart.reflow       = self.reflow;
             
@@ -144,6 +147,15 @@
             
             if(!options.legend) { options.legend = {}; }
             options.legend.enabled = !self.hideLegend;
+            
+            // Exception for sparkline
+            var elementType = self.nodeName;
+            if(elementType === 'HC-SPARKLINE') {
+                options.chart.width  = (self.width?self.width:120);
+                options.chart.height = (self.height?self.height:20);
+                options.legend.enabled = false;
+                options.title.text = '';
+            }
             
             return options;
         }
