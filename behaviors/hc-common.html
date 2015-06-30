@@ -224,6 +224,14 @@
                         chartCon.style.width  = self.width+'px';
                         chartCon.style.height = self.height+'px';
                         
+                        // Sometimes they aren't numbers
+                        if(Number(self.width)!==self.width) {
+                            return;
+                        }
+                        if(Number(self.height)!==self.height) {
+                            return;
+                        }
+                        
                         // This is how you get the nice dynamic
                         // resizing effect
                         self._chart.setSize(
