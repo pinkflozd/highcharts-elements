@@ -8,8 +8,8 @@
 Example:
 
     <hc-sparkline
-                series='[{"data": [2,10,32,100,84,120,95,155]}]'>
-            </hc-sparkline>
+        series='[{"data": [2,10,32,100,84,120,95,155]}]'>
+    </hc-sparkline>
 
 
 
@@ -31,6 +31,14 @@ Example:
 
         is: 'hc-sparkline'
 
+        , properties: {
+            
+            chartType: {
+                type: String,
+                value: HighChartsElement.SUPPORTED_CHART_TYPES.AREASPLINE
+            }
+        }
+        
         , behaviors: [
             HighChartsElement.Common
             , HighChartsElement.BaseChart

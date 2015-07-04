@@ -4,6 +4,17 @@
 
 <script>
      
+    HighChartsElement.SUPPORTED_CHART_TYPES = {
+        LINE:           'line'
+        , SPLINE:       'spline'
+        , BAR:          'bar'
+        , COLUMN:       'column'
+        , AREA:         'area'
+        , AREASPLINE:   'areaspline'
+        , SCATTER:      'scatter'
+        , BUBBLE:       'bubble'
+    };
+    
     /**
     * `HighChartsElement.BaseChart` is the base class for line, area, bubble, scatter and 
     * other types of charts that are mostly interchangable with the same data.
@@ -87,7 +98,7 @@
             
             options.chart.backgroundColor  = null;
             options.chart.borderWidth  = 0;
-            options.chart.type = 'area';
+            options.chart.type = self.chartType;
             options.chart.margin  = [2, 0, 2, 0];
             
             if(options.title===undefined) { options.title={}; }
