@@ -245,31 +245,37 @@
                         
                             // Get the point
                             var point = self._chart.series[0].data[0];
-
-                            // Update value
-                            // Even though we updated the series in the chart,
-                            // there seems to be a timing issue where the actual chart options
-                            // don't have the same data, thus the number flips back. 
-                            // Probably async data setting because of animation
-                            // Trying polymer async, else try cloning options
-                            self.async( function(){ var self = this;
-                                point.dataLabel.attr({ text: self._getGaugeDataLabelFormat(self._chart.options) });
-                            }.bind(self), 1);
+                            
+                            // Wierd edge case
+                            if(point) {
+                                // Update value
+                                // Even though we updated the series in the chart,
+                                // there seems to be a timing issue where the actual chart options
+                                // don't have the same data, thus the number flips back. 
+                                // Probably async data setting because of animation
+                                // Trying polymer async, else try cloning options
+                                self.async( function(){ var self = this;
+                                    point.dataLabel.attr({ text: self._getGaugeDataLabelFormat(self._chart.options) });
+                                }.bind(self), 1);
+                            }
                             
                         } else if(elementType === 'HC-GAUGE-SEMI') {
                         
                             // Get the point
                             var point = self._chart.series[0].data[0];
                             
-                            // Update value
-                            // Even though we updated the series in the chart,
-                            // there seems to be a timing issue where the actual chart options
-                            // don't have the same data, thus the number flips back. 
-                            // Probably async data setting because of animation
-                            // Trying polymer async, else try cloning options
-                            self.async( function(){ var self = this;
-                                point.dataLabel.attr({ text: self._getSemiGaugeDataLabelFormat(self._chart.options) });
-                            }.bind(self), 1);
+                            // Wierd edge case
+                            if(point) {
+                                // Update value
+                                // Even though we updated the series in the chart,
+                                // there seems to be a timing issue where the actual chart options
+                                // don't have the same data, thus the number flips back. 
+                                // Probably async data setting because of animation
+                                // Trying polymer async, else try cloning options
+                                self.async( function(){ var self = this;
+                                    point.dataLabel.attr({ text: self._getSemiGaugeDataLabelFormat(self._chart.options) });
+                                }.bind(self), 1);
+                            } 
                         }
 
                         // Hack because 'sometimes' this element does
