@@ -1,6 +1,6 @@
 {
   "name": "highcharts-elements",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A library of polymer elements for rendering highcharts",
   "homepage": "https://github.com/<USERNAME>/highcharts-elements/",
   "keywords": [
